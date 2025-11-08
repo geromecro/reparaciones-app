@@ -19,9 +19,13 @@ export async function GET() {
     })
     return NextResponse.json(reparaciones)
   } catch (error) {
-    console.error('Error fetching reparaciones:', error)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error('[API /reparaciones GET] Error:', {
+      message: errorMessage,
+      dbConfigured: !!process.env.DATABASE_URL
+    })
     return NextResponse.json(
-      { error: 'Error fetching reparaciones' },
+      { error: 'Error fetching reparaciones', details: errorMessage },
       { status: 500 }
     )
   }

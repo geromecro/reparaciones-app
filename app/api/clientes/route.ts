@@ -8,9 +8,13 @@ export async function GET() {
     })
     return NextResponse.json(clientes)
   } catch (error) {
-    console.error('Error fetching clientes:', error)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error('[API /clientes GET] Error:', {
+      message: errorMessage,
+      dbConfigured: !!process.env.DATABASE_URL
+    })
     return NextResponse.json(
-      { error: 'Error fetching clientes' },
+      { error: 'Error fetching clientes', details: errorMessage },
       { status: 500 }
     )
   }
@@ -40,9 +44,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(cliente, { status: 201 })
   } catch (error) {
-    console.error('Error creating cliente:', error)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error('[API /clientes POST] Error:', {
+      message: errorMessage,
+      dbConfigured: !!process.env.DATABASE_URL
+    })
     return NextResponse.json(
-      { error: 'Error creating cliente' },
+      { error: 'Error creating cliente', details: errorMessage },
       { status: 500 }
     )
   }
