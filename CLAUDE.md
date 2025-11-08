@@ -243,6 +243,7 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
 - Phase 1: Public tracking system with HistorialEstado audit trail
 - Phase 1.5: Tracking link in internal repair panel with copy-to-clipboard
 - Phase 2: Migrate from SQLite to PostgreSQL via Supabase (cloud-ready)
+- Phase 3: Deploy to Vercel with PostgreSQL connection (LIVE at https://reparaciones-app-juj2.vercel.app)
 
 ### In Progress
 - Phase 3: Deploy frontend to Vercel with PostgreSQL connection
