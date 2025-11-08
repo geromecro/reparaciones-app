@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id        Int     @id @default(autoincrement())
+  nombre    String
+  empresa   String?
+  telefono  String
+  email     String?
+  direccion String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  equipos    Equipo[]
+}
+
+model Equipo {
+  id                Int           @id @default(autoincrement())
+  clienteId         Int
+  cliente           Cliente       @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  descripcion       String
+  numeroEquipo      String?
+  fechaRecepcion    DateTime      @default(now())
+  numeroInterno     String        @unique
+  estado            EstadoEquipo  @default(RECIBIDO)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  reparaciones      Reparacion[]
+  entregas          Entrega[]
+}
+
+model Reparacion {
+  id                    Int               @id @default(autoincrement())
+  equipoId              Int
+  equipo                Equipo            @relation(fields: [equipoId], references: [id], onDelete: Cascade)
+  electricista          String
+  precintoNumero        String?
+  fechaAsignacion       DateTime          @default(now())
+  fechaEntregaEstimada  DateTime?
+  estado                EstadoReparacion  @default(RECIBIDO)
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  repuestosUsados       RepuestoUsado[]
+  valorizacion          Valorizacion?
+  historial             HistorialEstado[]
+}
+
+model HistorialEstado {
+  id              Int               @id @default(autoincrement())
+  reparacionId    Int
+  reparacion      Reparacion        @relation(fields: [reparacionId], references: [id], onDelete: Cascade)
+  estadoAnterior  String?
+  estadoNuevo     String
+  fechaCambio     DateTime          @default(now())
+  notas           String?
+  createdAt       DateTime          @default(now())
+}
+
+model RepuestoUsado {
+  id              Int         @id @default(autoincrement())
+  reparacionId    Int
+  reparacion      Reparacion  @relation(fields: [reparacionId], references: [id], onDelete: Cascade)
+  codigoRepuesto  String
+  descripcion     String?
+  cantidad        Int
+  importeUnitario Float
+  subtotal        Float
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Valorizacion {
+  id                    Int          @id @default(autoincrement())
+  reparacionId          Int          @unique
+  reparacion            Reparacion   @relation(fields: [reparacionId], references: [id], onDelete: Cascade)
+  costoRepuestos        Float        @default(0)
+  manoObraElectricista  String       // "Arnau" o "Ivan"
+  importeManoObra       Float
+  subtotal              Float
+  estado                EstadoCot    @default(PENDIENTE)
+  fechaValorizacion     DateTime     @default(now())
+  numeroFacturaInterna  String?
+  numeroFacturaOficial  String?
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  cotizacion            Cotizacion?
+}
+
+model Cotizacion {
+  id                  Int          @id @default(autoincrement())
+  valorizacionId      Int          @unique
+  valorizacion        Valorizacion @relation(fields: [valorizacionId], references: [id], onDelete: Cascade)
+  importeOriginal     Float
+  ajustePablo         Float        @default(0)
+  importeFinal        Float
+  estado              EstadoCot    @default(PENDIENTE)
+  fechaCotizacion     DateTime     @default(now())
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+}
+
+model Entrega {
+  id                  Int         @id @default(autoincrement())
+  equipoId            Int
+  equipo              Equipo      @relation(fields: [equipoId], references: [id], onDelete: Cascade)
+  numeroRemitoOficial String?
+  numeroRemitoInterno String?
+  fechaEntrega        DateTime    @default(now())
+  estado              EstadoEntrega @default(PENDIENTE)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+}
+
+// Enums para los estados
+enum EstadoEquipo {
+  RECIBIDO
+  EN_REPARACION
+  REPARADO
+  ENTREGADO
+}
+
+enum EstadoReparacion {
+  RECIBIDO
+  PRECINTADO
+  ASIGNADO
+  DIAGNOSTICO
+  EN_REPARACION
+  ESPERANDO_REPUESTOS
+  VALORIZADO
+  COTIZADO
+  APROBADO
+  FACTURADO
+  LISTO_PARA_RETIRO
+  ENTREGADO
+  CERRADO
+}
+
+enum EstadoCot {
+  PENDIENTE
+  COMPLETADA
+}
+
+enum EstadoEntrega {
+  PENDIENTE
+  COMPLETADA
+}
