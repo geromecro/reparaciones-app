@@ -10,18 +10,9 @@ interface EstadoSelectorProps {
 
 const ESTADOS = [
   { value: 'RECIBIDO', label: 'Recibido', variant: 'default' },
-  { value: 'PRECINTADO', label: 'Precintado', variant: 'default' },
-  { value: 'ASIGNADO', label: 'Asignado', variant: 'default' },
-  { value: 'DIAGNOSTICO', label: 'Diagnóstico', variant: 'warning' },
+  { value: 'DIAGNOSTICO', label: 'Diagnosticado', variant: 'warning' },
   { value: 'EN_REPARACION', label: 'En reparación', variant: 'warning' },
-  { value: 'ESPERANDO_REPUESTOS', label: 'Esperando repuestos', variant: 'warning' },
-  { value: 'VALORIZADO', label: 'Valorizado', variant: 'info' },
-  { value: 'COTIZADO', label: 'Cotizado (P)', variant: 'info' },
-  { value: 'APROBADO', label: 'Aprobado/OC', variant: 'info' },
-  { value: 'FACTURADO', label: 'Facturado', variant: 'success' },
-  { value: 'LISTO_PARA_RETIRO', label: 'Listo para retiro', variant: 'success' },
-  { value: 'ENTREGADO', label: 'Entregado', variant: 'success' },
-  { value: 'CERRADO', label: 'Cerrado', variant: 'default' },
+  { value: 'LISTO_PARA_RETIRO', label: 'Listo para retirar', variant: 'success' },
 ]
 
 const variantStyles = {
