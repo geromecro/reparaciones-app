@@ -28,11 +28,13 @@ rm prisma/dev.db && npm run prisma:migrate
 ## Architecture & Key Concepts
 
 ### Tech Stack
-- **Framework**: Next.js 14 (App Router) with TypeScript
+- **Framework**: Next.js 16 (App Router) with TypeScript
 - **Styling**: Tailwind CSS v4 with custom minimalista theme (white/gray palette)
-- **Database**: SQLite with Prisma ORM
+- **Database**: PostgreSQL (via Supabase) with Prisma ORM
 - **State Management**: React hooks (useState, useEffect)
 - **API**: Next.js Route Handlers (api/ folder)
+- **Deployment**: Vercel (auto-deploys from GitHub)
+- **Database Connection**: Supabase Session Pooler (port 5432)
 
 ### Design System
 The application uses a **minimalista modern design** with:
@@ -159,14 +161,34 @@ const id = params.id
 
 ## Database Configuration
 
-### Current Setup
-- **Database**: PostgreSQL via Supabase
-- **Connection String**: In `.env` and `.env.local`
+### Current Setup (Phase 2 & 3 Complete)
+- **Database**: PostgreSQL via Supabase Cloud
+- **Connection Method**: Session Pooler (Supabase recommended for serverless)
+- **Connection String**: `postgresql://postgres.idkdnycunqxpdxsanqjc:geroxido@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
 - **Provider**: `provider = "postgresql"` in `prisma/schema.prisma`
+- **Prisma Instance**: Singleton pattern in `lib/prisma.ts` (prevents connection pool exhaustion)
 - **Tables**: All 8 models synced (Cliente, Equipo, Reparacion, HistorialEstado, RepuestoUsado, Valorizacion, Cotizacion, Entrega)
 
-### How to Migrate Database
-If needed to reset/migrate again:
+### Vercel Environment Variables
+Set in Vercel Dashboard → Settings → Environment Variables:
+- `DATABASE_URL`: PostgreSQL connection string (Session Pooler from Supabase)
+
+### Build Configuration
+- **postinstall script**: Automatically runs `prisma generate` after npm install
+- **build script**: Runs `prisma generate && next build` to ensure Prisma client is generated
+- **vercel.json**: Removed (Vercel auto-detects Next.js 16 correctly)
+
+### Prisma Singleton Pattern
+Located in `lib/prisma.ts`:
+```typescript
+const globalForPrisma = global as unknown as { prisma: PrismaClient }
+export const prisma = globalForPrisma.prisma || new PrismaClient()
+globalForPrisma.prisma = prisma  // Cache for both dev and production
+```
+This prevents creating multiple Prisma clients which would exhaust PostgreSQL connection pool.
+
+### How to Migrate Database (if needed)
+If you need to reset/migrate:
 ```bash
 PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION="yes" npx prisma db push --force-reset
 ```
@@ -240,23 +262,74 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
 ## Implementation Roadmap
 
 ### Completed (✅)
-- Phase 1: Public tracking system with HistorialEstado audit trail
-- Phase 1.5: Tracking link in internal repair panel with copy-to-clipboard
-- Phase 2: Migrate from SQLite to PostgreSQL via Supabase (cloud-ready)
-- Phase 3: Deploy to Vercel with PostgreSQL connection (LIVE at https://reparaciones-app-juj2.vercel.app)
+- **Phase 1**: Public tracking system with HistorialEstado audit trail
+  - ✅ Public API endpoint `/api/seguimiento/[codigo]`
+  - ✅ Public page `/seguimiento/[codigo]` with timeline display
+  - ✅ Estado changes auto-record in HistorialEstado
 
-### In Progress
-- Phase 3: Deploy frontend to Vercel with PostgreSQL connection
-- Phase 4: Configure environment variables in Vercel
-- Phase 5: Final testing and domain setup
-- Phase 6: Optional WhatsApp integration for tracking links
+- **Phase 1.5**: Tracking link in internal repair panel
+  - ✅ Display tracking URL in repair detail page
+  - ✅ "Copiar Link" button with navigator.clipboard
+  - ✅ Integration with internal repair workflow
 
-### Future Improvements
-- PDF generation for invoices and delivery notes
-- Advanced search and filtering by date/cliente/estado
-- Revenue reports and analytics
-- User authentication (technician login)
-- Integration with existing parts catalog/suppliers
-- Email notifications when repair estado changes
-- SMS notifications to customers
-- WhatsApp bot for tracking updates
+- **Phase 2**: PostgreSQL Migration from SQLite
+  - ✅ Created Supabase PostgreSQL database
+  - ✅ Updated Prisma schema provider to PostgreSQL
+  - ✅ Configured DATABASE_URL environment variable
+  - ✅ All 8 models synced to cloud database
+  - ✅ Verified data persistence with test records
+
+- **Phase 3**: Vercel Deployment with PostgreSQL
+  - ✅ Created GitHub repository (geromecro/reparaciones-app)
+  - ✅ Connected Vercel to GitHub repository
+  - ✅ Restructured repo: moved app from `reparaciones-app/` subdirectory to root
+  - ✅ Fixed Next.js 16 Suspense issues in `/cotizaciones/nueva`
+  - ✅ Implemented Prisma singleton pattern to prevent connection pool exhaustion
+  - ✅ Added detailed error logging to API routes
+  - ✅ Configured Supabase Session Pooler for serverless connections
+  - ✅ **LIVE DEPLOYMENT**: https://reparaciones-app.vercel.app/
+
+- **Phase 3.5**: End-to-End Testing (Nov 8, 2025)
+  - ✅ Home page loads correctly
+  - ✅ Dashboard displays with stats (0 repairs)
+  - ✅ Nueva Reparación 3-step form works
+  - ✅ Created test reparación: "Alternador Bosch 150A" for Juan Pérez
+  - ✅ Reparación detail page displays all information
+  - ✅ Tracking link generated: `/seguimiento/EQUIPO-1762643356433`
+  - ✅ Public tracking page loads and displays estado
+  - ✅ All APIs responding correctly (clientes, reparaciones, equipos)
+  - ✅ PostgreSQL connection verified with test data
+
+### In Progress / To Do
+- Phase 4: Complete feature testing
+  - ⏳ Test Cotizaciones workflow
+  - ⏳ Test Entregas workflow
+  - ⏳ Test estado changes and HistorialEstado updates
+  - ⏳ Test Agregar Repuestos
+  - ⏳ Test Crear Valorización
+
+- Phase 5: Optional Enhancements
+  - ⏳ PDF generation for invoices and delivery notes
+  - ⏳ Advanced search and filtering by date/cliente/estado
+  - ⏳ Revenue reports and analytics
+  - ⏳ User authentication (technician login)
+  - ⏳ Custom domain configuration
+  - ⏳ Email notifications when repair estado changes
+  - ⏳ SMS notifications to customers
+  - ⏳ WhatsApp integration for tracking links
+
+### Known Issues & Fixes Applied
+1. **Prisma Connection Pool Exhaustion**
+   - ✅ Fixed: Implemented singleton pattern in `lib/prisma.ts`
+   - ✅ Fixed: Added `postinstall` and updated `build` scripts to ensure Prisma client generation
+
+2. **Next.js 16 Suspense Requirement**
+   - ✅ Fixed: Wrapped `useSearchParams()` in Suspense boundary in `/cotizaciones/nueva`
+
+3. **Vercel Auto-Detection Issues**
+   - ✅ Fixed: Removed problematic `vercel.json` configuration
+   - ✅ Fixed: Vercel now correctly auto-detects Next.js framework
+
+4. **PostgreSQL Connection from Vercel**
+   - ✅ Fixed: Configured Supabase Network Restrictions to allow all IPs
+   - ✅ Fixed: Changed to Session Pooler connection method (recommended for serverless)
