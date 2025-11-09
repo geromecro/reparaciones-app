@@ -566,22 +566,20 @@ export default function DetallesReparacion() {
                       <td className="px-4 py-2 text-right">${rep.importeUnitario.toFixed(2)}</td>
                       <td className="px-4 py-2 text-right font-semibold">${rep.subtotal.toFixed(2)}</td>
                       <td className="px-4 py-2 text-center space-x-2">
-                        {!reparacion.valorizacion && (
-                          <>
-                            <button
-                              onClick={() => setEditingRepuesto({id: rep.id, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})}
-                              className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                            >
-                              Editar
-                            </button>
-                            <button
-                              onClick={() => deleteRepuesto(rep.id)}
-                              className="text-red-600 hover:text-red-800 text-xs font-medium"
-                            >
-                              Eliminar
-                            </button>
-                          </>
-                        )}
+                        <>
+                          <button
+                            onClick={() => setEditingRepuesto({id: rep.id, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})}
+                            className="text-blue-600 hover:text-blue-800 text-xs font-medium"
+                          >
+                            Editar
+                          </button>
+                          <button
+                            onClick={() => deleteRepuesto(rep.id)}
+                            className="text-red-600 hover:text-red-800 text-xs font-medium"
+                          >
+                            Eliminar
+                          </button>
+                        </>
                       </td>
                     </tr>
                   ))}
