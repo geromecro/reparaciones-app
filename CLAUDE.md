@@ -323,7 +323,21 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
 
 **Ready for operational use with real clients.**
 
-### Phase 5: Optional Future Enhancements
+### Phase 5: Edit/Delete Repuestos & Cotizaciones with Automatic Recalculation (Nov 9, 2025)
+  - ✅ **New API Route**: `app/api/repuestos/[id]/route.ts` with PUT (edit) and DELETE handlers
+  - ✅ **New API Route**: `app/api/cotizaciones/[id]/route.ts` with PUT (edit) handler
+  - ✅ **Helper Function**: `lib/recalcular-valorizacion.ts` automatically recalculates totals when parts change
+  - ✅ **UI Enhancement**: Repuestos table shows "Editar" and "Eliminar" buttons (only before valorizacion created)
+  - ✅ **Modal Edit Form**: Edit repuestos with Cantidad and Precio Unitario fields
+  - ✅ **Modal Edit Form**: Edit cotización with ajustePablo field, importeOriginal and importeFinal auto-update
+  - ✅ **Automatic Recalculation**:
+    - Edit/delete repuestos → Subtotal recalculated → Valorizacion.costoRepuestos updated → Valorizacion.subtotal updated → Cotizacion.importeOriginal and importeFinal recalculated automatically
+    - Edit cotización ajustePablo → importeFinal recalculated instantly (importeOriginal + ajustePablo)
+  - ✅ **End-to-End Testing**: Created repair #3, added repuestos, tested edit (quantity 2→3, price $45.50→$50 = $150 subtotal), tested delete (removed second repuesto, total recalculated $175→$150), created valorizacion ($150 parts + $300 labor = $450), created cotización ($50 adjustment = $500 final), edited cotización ($50→$75 adjustment = $525 final)
+  - ✅ **All changes reflected in real-time** on internal panel
+  - ✅ **Public tracking link** automatically reflects updated repuestos list
+
+### Phase 6: Optional Future Enhancements
   - ⏳ PDF generation for invoices and delivery notes
   - ⏳ Advanced search and filtering by date/cliente/estado
   - ⏳ Revenue reports and analytics
