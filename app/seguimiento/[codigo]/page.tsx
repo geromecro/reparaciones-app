@@ -19,6 +19,11 @@ interface Seguimiento {
     estado: string
     createdAt: string
   }
+  repuestos: Array<{
+    codigoRepuesto: string
+    descripcion: string | null
+    cantidad: number
+  }>
   historial: Array<{
     id: number
     estadoAnterior: string | null
@@ -149,6 +154,32 @@ export default function SeguimientoReparacion() {
             </div>
           </div>
         </div>
+
+        {/* Repuestos Utilizados */}
+        {data.repuestos && data.repuestos.length > 0 && (
+          <div className="bg-white rounded-lg border border-primary-200 shadow-sm p-6 mb-8">
+            <h2 className="text-lg font-semibold text-primary-900 mb-4">
+              Repuestos Utilizados
+            </h2>
+            <div className="space-y-4">
+              {data.repuestos.map((repuesto, idx) => (
+                <div key={idx} className="border-l-4 border-primary-300 pl-4 py-2">
+                  <p className="font-medium text-primary-900">
+                    {repuesto.codigoRepuesto}
+                  </p>
+                  {repuesto.descripcion && (
+                    <p className="text-sm text-primary-600 mt-1">
+                      {repuesto.descripcion}
+                    </p>
+                  )}
+                  <p className="text-sm text-primary-500 mt-1">
+                    Cantidad: {repuesto.cantidad} {repuesto.cantidad === 1 ? 'unidad' : 'unidades'}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Timeline */}
         <div className="bg-white rounded-lg border border-primary-200 shadow-sm p-6">
