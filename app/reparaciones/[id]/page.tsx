@@ -37,6 +37,8 @@ interface Reparacion {
 
 interface EditingRepuesto {
   id: number
+  codigoRepuesto: string
+  descripcion?: string
   cantidad: number
   importeUnitario: number
 }
@@ -139,6 +141,8 @@ export default function DetallesReparacion() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          codigoRepuesto: editingRepuesto.codigoRepuesto,
+          descripcion: editingRepuesto.descripcion || '',
           cantidad: parseInt(editingRepuesto.cantidad.toString()),
           importeUnitario: parseFloat(editingRepuesto.importeUnitario.toString())
         })
@@ -246,6 +250,29 @@ export default function DetallesReparacion() {
       >
         <form onSubmit={updateRepuesto}>
           <div className="space-y-4 mb-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Código Repuesto
+              </label>
+              <input
+                type="text"
+                required
+                value={editingRepuesto?.codigoRepuesto || ''}
+                onChange={(e) => editingRepuesto && setEditingRepuesto({...editingRepuesto, codigoRepuesto: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Descripción
+              </label>
+              <input
+                type="text"
+                value={editingRepuesto?.descripcion || ''}
+                onChange={(e) => editingRepuesto && setEditingRepuesto({...editingRepuesto, descripcion: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Cantidad
@@ -568,7 +595,7 @@ export default function DetallesReparacion() {
                       <td className="px-4 py-2 text-center space-x-2">
                         <>
                           <button
-                            onClick={() => setEditingRepuesto({id: rep.id, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})}
+                            onClick={() => setEditingRepuesto({id: rep.id, codigoRepuesto: rep.codigoRepuesto, descripcion: rep.descripcion, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})}
                             className="text-blue-600 hover:text-blue-800 text-xs font-medium"
                           >
                             Editar

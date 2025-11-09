@@ -9,11 +9,11 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
-    const { cantidad, importeUnitario } = body
+    const { codigoRepuesto, descripcion, cantidad, importeUnitario } = body
 
-    if (!cantidad || importeUnitario === undefined) {
+    if (!codigoRepuesto || !cantidad || importeUnitario === undefined) {
       return NextResponse.json(
-        { error: 'cantidad e importeUnitario son requeridos' },
+        { error: 'codigoRepuesto, cantidad e importeUnitario son requeridos' },
         { status: 400 }
       )
     }
@@ -38,6 +38,8 @@ export async function PUT(
     const updatedRepuesto = await prisma.repuestoUsado.update({
       where: { id: parseInt(id) },
       data: {
+        codigoRepuesto,
+        descripcion: descripcion || null,
         cantidad: cantidadNum,
         importeUnitario: importeNum,
         subtotal: newSubtotal
