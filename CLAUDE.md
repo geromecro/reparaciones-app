@@ -43,7 +43,8 @@ The application uses a **minimalista modern design** with:
   - `Button.tsx`: 4 variants (primary, secondary, ghost, danger)
   - `Badge.tsx`: Status indicators with 5 variants
   - `Card.tsx`: Surface component with header/body/footer sections
-  - `EstadoSelector.tsx`: Dropdown for repair state changes (13 states)
+  - `EstadoSelector.tsx`: Dropdown for repair state changes (4 states: Recibido, Diagnosticado, En reparación, Listo para retirar)
+  - `Modal.tsx`: Reusable modal component using React Portal with dark overlay
 - **Tailwind Config**: Custom theme in `tailwind.config.js` with extended colors and shadows
 - **Global Styles**: `app/globals.css` for base typography and component layers
 
@@ -53,7 +54,7 @@ The application uses a **minimalista modern design** with:
 
 1. **Cliente**: Customer info (nombre, empresa, telefono, email, direccion)
 2. **Equipo**: Equipment/device (descripcion, numeroInterno, estado)
-3. **Reparacion**: Repair record (electricista, precintoNumero, estado, fechaEntregaEstimada)
+3. **Reparacion**: Repair record (electricista, precintoNumero, estado)
 4. **RepuestoUsado**: Parts used in repair (codigo, cantidad, importeUnitario, subtotal)
 5. **HistorialEstado**: Audit trail (reparacionId, estadoAnterior, estadoNuevo, fechaCambio, notas)
 6. **Valorizacion**: Cost breakdown (costoRepuestos, importeManoObra, subtotal)
@@ -62,12 +63,11 @@ The application uses a **minimalista modern design** with:
 
 ### State Progression
 
-**Reparacion States** (13 total, organized in 5 phases):
-- **Inicio** (blue): RECIBIDO → PRECINTADO → ASIGNADO
-- **Trabajo** (amber): DIAGNOSTICO → EN_REPARACION → ESPERANDO_REPUESTOS
-- **Administrativo** (gray): VALORIZADO → COTIZADO → APROBADO
-- **Final** (green): FACTURADO → LISTO_PARA_RETIRO → ENTREGADO
-- **Completo** (gray): CERRADO
+**Reparacion States** (4 simplified states):
+- **RECIBIDO** (blue): Equipment received, initial state
+- **DIAGNOSTICO** (amber): Diagnostic assessment completed
+- **EN_REPARACION** (amber): Repair work in progress
+- **LISTO_PARA_RETIRO** (green): Repair completed, ready for customer pickup
 
 ### Page Structure
 
@@ -327,7 +327,7 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
   - ✅ **New API Route**: `app/api/repuestos/[id]/route.ts` with PUT (edit) and DELETE handlers
   - ✅ **New API Route**: `app/api/cotizaciones/[id]/route.ts` with PUT (edit) handler
   - ✅ **Helper Function**: `lib/recalcular-valorizacion.ts` automatically recalculates totals when parts change
-  - ✅ **UI Enhancement**: Repuestos table shows "Editar" and "Eliminar" buttons (only before valorizacion created)
+  - ✅ **UI Enhancement**: Repuestos table shows "Editar" and "Eliminar" buttons (initially only before valorizacion, later made always visible in Phase 5.6)
   - ✅ **Modal Edit Form**: Edit repuestos with Cantidad and Precio Unitario fields
   - ✅ **Modal Edit Form**: Edit cotización with ajustePablo field, importeOriginal and importeFinal auto-update
   - ✅ **Automatic Recalculation**:
@@ -358,6 +358,40 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
     - Dimmed background prevents accidental clicks on page elements
     - Inline styles used instead of Tailwind to avoid CSS specificity/compilation issues
     - Solution is "clear and simple" as requested (no complex animations or transitions)
+
+### Phase 5.6: Extended Repuesto Editing & Form Simplification (Nov 9, 2025)
+  - ✅ **Extended Edit Modal**: Repuestos now editable with 4 fields
+    - Can edit `codigoRepuesto` (required)
+    - Can edit `descripcion` (optional)
+    - Can edit `cantidad` and `importeUnitario` (both required)
+    - All changes trigger automatic recalculation
+  - ✅ **Always-Visible Action Buttons**:
+    - "Editar" and "Eliminar" buttons now visible at all times (before AND after valorizacion)
+    - "+ Agregar Repuesto" button also always visible
+    - Users can modify parts at any point in the workflow
+  - ✅ **Manual numeroInterno Input**:
+    - Replaced auto-generated `numeroInterno` with manual user input
+    - Added "Número de Documento/Seguimiento" field in Step 2 (Equipo)
+    - This number is used for customer tracking links (`/seguimiento/{numeroInterno}`)
+    - Matches the physical document number given to customer
+  - ✅ **Simplified Nueva Reparación Form**:
+    - Removed 3 unnecessary fields:
+      - `direccion` from cliente form (Step 1)
+      - `numeroEquipo` from equipo form (Step 2)
+      - `fechaEntregaEstimada` from reparacion form (Step 3)
+    - Form now contains only 6 essential fields (4 required)
+  - ✅ **Simplified Repair States**:
+    - Reduced from 13 states to only 4 essential states
+    - **RECIBIDO** → **DIAGNOSTICO** → **EN_REPARACION** → **LISTO_PARA_RETIRO**
+    - Updated `EstadoSelector.tsx` component with new simplified states
+    - Color coding: blue → amber → amber → green
+    - Database schema updated (requires `npx prisma db push --force-reset`)
+  - ✅ **Commits** (Nov 9, 2025):
+    - `a30c81f`: Allow editing codigoRepuesto and descripcion in repuesto edit modal
+    - `47bfc69`: Allow adding repuestos after valorizacion is created
+    - `dc9422e`: Simplify nueva reparacion form: remove unnecessary fields
+    - `d72fda2`: Replace auto-generated numeroInterno with manual user input
+    - `e0da43d`: Simplify repair states to only 4 essential states
 
 ### Phase 6: Optional Future Enhancements
   - ⏳ PDF generation for invoices and delivery notes
