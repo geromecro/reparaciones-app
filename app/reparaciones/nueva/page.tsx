@@ -28,7 +28,8 @@ export default function NuevaReparacion() {
     email: ''
   })
   const [equipo, setEquipo] = useState({
-    descripcion: ''
+    descripcion: '',
+    numeroInterno: ''
   })
   const [reparacion, setReparacion] = useState({
     electricista: 'Arnau',
@@ -296,6 +297,20 @@ export default function NuevaReparacion() {
                 <p className="text-sm text-gray-600 mb-4">
                   Cliente: <span className="font-semibold">{clienteSeleccionado?.nombre}</span>
                 </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Número de Documento/Seguimiento *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={equipo.numeroInterno}
+                  onChange={(e) => setEquipo({...equipo, numeroInterno: e.target.value})}
+                  placeholder="Ej: 2025-001"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                />
               </div>
 
               <div>

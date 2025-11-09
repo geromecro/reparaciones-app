@@ -25,23 +25,19 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { clienteId, descripcion, numeroEquipo } = body
+    const { clienteId, descripcion, numeroInterno } = body
 
-    if (!clienteId || !descripcion) {
+    if (!clienteId || !descripcion || !numeroInterno) {
       return NextResponse.json(
-        { error: 'clienteId y descripcion son requeridos' },
+        { error: 'clienteId, descripcion y numeroInterno son requeridos' },
         { status: 400 }
       )
     }
-
-    // Generate internal number
-    const numeroInterno = `EQUIPO-${Date.now()}`
 
     const equipo = await prisma.equipo.create({
       data: {
         clienteId: parseInt(clienteId),
         descripcion,
-        numeroEquipo,
         numeroInterno
       },
       include: { cliente: true }
