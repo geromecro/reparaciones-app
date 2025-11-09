@@ -25,17 +25,14 @@ export default function NuevaReparacion() {
     nombre: '',
     empresa: '',
     telefono: '',
-    email: '',
-    direccion: ''
+    email: ''
   })
   const [equipo, setEquipo] = useState({
-    descripcion: '',
-    numeroEquipo: ''
+    descripcion: ''
   })
   const [reparacion, setReparacion] = useState({
     electricista: 'Arnau',
-    precintoNumero: '',
-    fechaEntregaEstimada: ''
+    precintoNumero: ''
   })
 
   // Step 1: Search or create client
@@ -269,18 +266,6 @@ export default function NuevaReparacion() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Dirección
-                    </label>
-                    <input
-                      type="text"
-                      value={nuevoCliente.direccion}
-                      onChange={(e) => setNuevoCliente({...nuevoCliente, direccion: e.target.value})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
                   <div className="flex gap-4 pt-4">
                     <button
                       type="button"
@@ -324,19 +309,6 @@ export default function NuevaReparacion() {
                   placeholder="Ej: Alternador Bosch 150A"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   rows={3}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Número del Equipo (opcional)
-                </label>
-                <input
-                  type="text"
-                  value={equipo.numeroEquipo}
-                  onChange={(e) => setEquipo({...equipo, numeroEquipo: e.target.value})}
-                  placeholder="Ej: ALT-2024-001"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -390,18 +362,6 @@ export default function NuevaReparacion() {
                   value={reparacion.precintoNumero}
                   onChange={(e) => setReparacion({...reparacion, precintoNumero: e.target.value})}
                   placeholder="Ej: PRECINTO-001"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Fecha de Entrega Estimada
-                </label>
-                <input
-                  type="date"
-                  value={reparacion.fechaEntregaEstimada}
-                  onChange={(e) => setReparacion({...reparacion, fechaEntregaEstimada: e.target.value})}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
