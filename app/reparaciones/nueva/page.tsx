@@ -139,28 +139,28 @@ export default function NuevaReparacion() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Nueva Reparación
           </h1>
-          <p className="text-gray-600">
+          <p className="text-base text-gray-600">
             Paso {step} de 3
           </p>
         </div>
 
         {/* Progress Bar */}
-        <div className="mb-8 bg-white rounded-lg shadow p-6">
+        <div className="mb-12 bg-white rounded-lg shadow-md p-8">
           <div className="flex justify-between items-center">
             {[1, 2, 3].map(s => (
               <div key={s} className="flex flex-col items-center flex-1">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-200 ${
                   s <= step
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-300 text-gray-600'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-gray-200 text-gray-600'
                 }`}>
                   {s}
                 </div>
-                <p className="text-xs text-gray-600 mt-2 text-center">
+                <p className="text-xs font-medium text-gray-600 mt-3 text-center">
                   {s === 1 && 'Cliente'}
                   {s === 2 && 'Equipo'}
                   {s === 3 && 'Reparación'}
@@ -171,10 +171,10 @@ export default function NuevaReparacion() {
         </div>
 
         {/* Forms */}
-        <div className="bg-white rounded-lg shadow p-8">
+        <div className="bg-white rounded-lg shadow-md p-8">
           {step === 1 && (
             <div>
-              <h2 className="text-xl font-semibold mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-8">
                 {showNewCliente ? 'Nuevo Cliente' : 'Seleccionar Cliente'}
               </h2>
 
@@ -214,13 +214,13 @@ export default function NuevaReparacion() {
 
                   <button
                     onClick={() => setShowNewCliente(true)}
-                    className="w-full bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                    className="w-full bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 font-medium transition-colors"
                   >
                     + Crear Nuevo Cliente
                   </button>
                 </div>
               ) : (
-                <form onSubmit={createNewCliente} className="space-y-4">
+                <form onSubmit={createNewCliente} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Nombre *
@@ -267,18 +267,18 @@ export default function NuevaReparacion() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <div className="flex gap-4 pt-4">
+                  <div className="flex gap-4 pt-6">
                     <button
                       type="button"
                       onClick={() => setShowNewCliente(false)}
-                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 rounded-lg hover:bg-gray-400 font-medium transition-colors"
                     >
                       Cancelar
                     </button>
                     <button
                       type="submit"
                       disabled={loading}
-                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                      className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
                     >
                       {loading ? 'Creando...' : 'Crear Cliente'}
                     </button>
@@ -291,11 +291,11 @@ export default function NuevaReparacion() {
           {step === 2 && (
             <form onSubmit={createEquipo} className="space-y-6">
               <div>
-                <h2 className="text-xl font-semibold mb-4">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Datos del Equipo
                 </h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  Cliente: <span className="font-semibold">{clienteSeleccionado?.nombre}</span>
+                <p className="text-sm text-gray-600 mb-8">
+                  Cliente: <span className="font-semibold text-gray-900">{clienteSeleccionado?.nombre}</span>
                 </p>
               </div>
 
@@ -327,18 +327,18 @@ export default function NuevaReparacion() {
                 />
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-4 pt-6">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 rounded-lg hover:bg-gray-400 font-medium transition-colors"
                 >
                   ← Anterior
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                  className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
                 >
                   {loading ? 'Guardando...' : 'Siguiente →'}
                 </button>
@@ -349,7 +349,7 @@ export default function NuevaReparacion() {
           {step === 3 && (
             <form onSubmit={createReparacion} className="space-y-6">
               <div>
-                <h2 className="text-xl font-semibold mb-4">
+                <h2 className="text-2xl font-bold text-gray-900 mb-8">
                   Asignar Reparación
                 </h2>
               </div>
@@ -382,18 +382,18 @@ export default function NuevaReparacion() {
                 />
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-4 pt-6">
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 rounded-lg hover:bg-gray-400 font-medium transition-colors"
                 >
                   ← Anterior
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
+                  className="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 font-medium transition-colors"
                 >
                   {loading ? 'Creando...' : 'Crear Reparación'}
                 </button>
@@ -403,8 +403,8 @@ export default function NuevaReparacion() {
         </div>
 
         {/* Footer */}
-        <div className="mt-6 text-center">
-          <Link href="/" className="text-blue-600 hover:text-blue-900">
+        <div className="mt-8 text-center">
+          <Link href="/" className="text-blue-600 hover:text-blue-900 font-medium transition-colors">
             ← Volver al inicio
           </Link>
         </div>

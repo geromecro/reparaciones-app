@@ -422,28 +422,28 @@ export default function DetallesReparacion() {
 
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8 flex justify-between items-start">
+        <div className="mb-12 flex justify-between items-start">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
               Reparación #{reparacion.id}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-base text-gray-600">
               {reparacion.equipo.cliente.nombre} - {reparacion.equipo.descripcion}
             </p>
           </div>
           <Link
             href="/dashboard"
-            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
           >
             ← Volver
           </Link>
         </div>
 
         {/* Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Equipo Info */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="font-semibold text-gray-900 mb-4">Información del Equipo</h2>
+          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8">
+            <h2 className="text-lg font-bold text-gray-900 mb-6">Información del Equipo</h2>
             <div className="space-y-3 text-sm">
               <div>
                 <p className="text-gray-600">Descripción</p>
@@ -463,9 +463,9 @@ export default function DetallesReparacion() {
           </div>
 
           {/* Reparacion Info */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="font-semibold text-gray-900">Información de Reparación</h2>
+          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8">
+            <div className="flex justify-between items-start mb-6">
+              <h2 className="text-lg font-bold text-gray-900">Información de Reparación</h2>
               {!editingBasicInfo && (
                 <button
                   onClick={handleEditBasicInfoClick}
@@ -547,8 +547,8 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Cliente Info */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h2 className="font-semibold text-gray-900 mb-4">Información del Cliente</h2>
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8 mb-12">
+          <h2 className="text-lg font-bold text-gray-900 mb-6">Información del Cliente</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-gray-600">Nombre</p>
@@ -562,8 +562,8 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Tracking Link */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h2 className="font-semibold text-gray-900 mb-4">Link de Seguimiento para Cliente</h2>
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8 mb-12">
+          <h2 className="text-lg font-bold text-gray-900 mb-6">Link de Seguimiento para Cliente</h2>
           <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
             <input
               type="text"
@@ -585,9 +585,9 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Repuestos Section */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8 mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="font-semibold text-gray-900">Repuestos Utilizados</h2>
+            <h2 className="text-lg font-bold text-gray-900">Repuestos Utilizados</h2>
             <button
               onClick={() => setShowFormRepuesto(!showFormRepuesto)}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
@@ -667,24 +667,24 @@ export default function DetallesReparacion() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b bg-gray-50">
-                    <th className="px-4 py-2 text-left text-gray-900">Código</th>
-                    <th className="px-4 py-2 text-left text-gray-900">Descripción</th>
-                    <th className="px-4 py-2 text-center text-gray-900">Cantidad</th>
-                    <th className="px-4 py-2 text-right text-gray-900">Precio Unit.</th>
-                    <th className="px-4 py-2 text-right text-gray-900">Subtotal</th>
-                    <th className="px-4 py-2 text-center text-gray-900">Acciones</th>
+                  <tr className="border-b border-gray-200 bg-gray-50">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">Código</th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">Descripción</th>
+                    <th className="px-6 py-4 text-center text-xs font-bold text-gray-900 uppercase tracking-wide">Cantidad</th>
+                    <th className="px-6 py-4 text-right text-xs font-bold text-gray-900 uppercase tracking-wide">Precio Unit.</th>
+                    <th className="px-6 py-4 text-right text-xs font-bold text-gray-900 uppercase tracking-wide">Subtotal</th>
+                    <th className="px-6 py-4 text-center text-xs font-bold text-gray-900 uppercase tracking-wide">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   {reparacion.repuestosUsados.map(rep => (
-                    <tr key={rep.id} className="border-b hover:bg-gray-50">
-                      <td className="px-4 py-2">{rep.codigoRepuesto}</td>
-                      <td className="px-4 py-2">{rep.descripcion || '-'}</td>
-                      <td className="px-4 py-2 text-center">{rep.cantidad}</td>
-                      <td className="px-4 py-2 text-right">${rep.importeUnitario.toFixed(2)}</td>
-                      <td className="px-4 py-2 text-right font-semibold">${rep.subtotal.toFixed(2)}</td>
-                      <td className="px-4 py-2 text-center space-x-2">
+                    <tr key={rep.id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150">
+                      <td className="px-6 py-4 text-sm">{rep.codigoRepuesto}</td>
+                      <td className="px-6 py-4 text-sm">{rep.descripcion || '-'}</td>
+                      <td className="px-6 py-4 text-center text-sm">{rep.cantidad}</td>
+                      <td className="px-6 py-4 text-right text-sm">${rep.importeUnitario.toFixed(2)}</td>
+                      <td className="px-6 py-4 text-right text-sm font-semibold">${rep.subtotal.toFixed(2)}</td>
+                      <td className="px-6 py-4 text-center space-x-2">
                         <>
                           <button
                             onClick={() => setEditingRepuesto({id: rep.id, codigoRepuesto: rep.codigoRepuesto, descripcion: rep.descripcion, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})}
@@ -702,9 +702,9 @@ export default function DetallesReparacion() {
                       </td>
                     </tr>
                   ))}
-                  <tr className="font-semibold bg-gray-50">
-                    <td colSpan={5} className="px-4 py-2 text-right">Total Repuestos:</td>
-                    <td className="px-4 py-2 text-right">${totalRepuestos.toFixed(2)}</td>
+                  <tr className="font-semibold bg-gray-50 border-t border-gray-200">
+                    <td colSpan={5} className="px-6 py-4 text-right text-sm font-bold">Total Repuestos:</td>
+                    <td className="px-6 py-4 text-right text-sm font-bold">${totalRepuestos.toFixed(2)}</td>
                   </tr>
                 </tbody>
               </table>
@@ -715,9 +715,9 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Valorizacion Section */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="font-semibold text-gray-900">Valorización</h2>
+            <h2 className="text-lg font-bold text-gray-900">Valorización</h2>
             {!reparacion.valorizacion && (
               <button
                 onClick={() => setShowFormValorizacion(!showFormValorizacion)}

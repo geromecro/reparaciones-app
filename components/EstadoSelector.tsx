@@ -16,10 +16,10 @@ const ESTADOS = [
 ]
 
 const variantStyles = {
-  default: 'bg-primary-100 text-primary-900',
-  warning: 'bg-warning-50 text-warning-700 border border-warning-100',
-  success: 'bg-accent-50 text-accent-700 border border-accent-200',
-  info: 'bg-primary-100 text-primary-800 border border-primary-200',
+  default: 'bg-blue-100 text-blue-900 border border-blue-200',
+  warning: 'bg-amber-100 text-amber-900 border border-amber-200',
+  success: 'bg-green-100 text-green-900 border border-green-200',
+  info: 'bg-blue-100 text-blue-900 border border-blue-200',
 }
 
 export default function EstadoSelector({
@@ -71,24 +71,24 @@ export default function EstadoSelector({
       <button
         onClick={() => !loading && setIsOpen(!isOpen)}
         disabled={loading}
-        className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-          estadoActualInfo ? variantStyles[estadoActualInfo.variant as keyof typeof variantStyles] : 'bg-primary-100 text-primary-900'
-        } hover:shadow-sm`}
+        className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md ${
+          estadoActualInfo ? variantStyles[estadoActualInfo.variant as keyof typeof variantStyles] : 'bg-blue-100 text-blue-900 border border-blue-200'
+        }`}
       >
         {loading ? 'Actualizando...' : estadoActualInfo?.label || estadoActual}
       </button>
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-primary-200 rounded-lg shadow-lg z-50">
+        <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
           <div className="max-h-96 overflow-y-auto">
             {ESTADOS.map(estado => (
               <button
                 key={estado.value}
                 onClick={() => handleEstadoChange(estado.value)}
                 disabled={loading}
-                className={`w-full text-left px-4 py-3 border-b border-primary-100 transition-colors hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed ${
-                  estadoActual === estado.value ? 'bg-primary-50' : ''
+                className={`w-full text-left px-4 py-3 border-b border-gray-100 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  estadoActual === estado.value ? 'bg-gray-50 font-semibold' : ''
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -98,7 +98,7 @@ export default function EstadoSelector({
                     </span>
                   </div>
                   {estadoActual === estado.value && (
-                    <svg className="w-4 h-4 text-primary-700" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   )}
@@ -108,7 +108,7 @@ export default function EstadoSelector({
           </div>
 
           {error && (
-            <div className="px-4 py-2 bg-error-50 border-t border-error-200 text-error-600 text-sm">
+            <div className="px-4 py-3 bg-red-50 border-t border-red-200 text-red-700 text-sm font-medium">
               {error}
             </div>
           )}

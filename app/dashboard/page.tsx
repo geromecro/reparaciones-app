@@ -124,13 +124,13 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {statCards.map((stat, idx) => (
-            <div key={idx} className="bg-white rounded-lg border border-primary-200 shadow-sm p-6 hover:shadow-md transition-shadow">
-              <p className="text-sm text-primary-600 mb-2">
+            <div key={idx} className="bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-lg transition-all duration-200 p-8">
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
                 {stat.label}
               </p>
-              <p className="text-4xl font-bold text-primary-900">
+              <p className="text-5xl font-bold text-gray-900">
                 {stat.count}
               </p>
             </div>
@@ -138,14 +138,14 @@ export default function Dashboard() {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-lg border border-primary-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
           {loading ? (
             <div className="p-12 text-center">
-              <p className="text-primary-600">Cargando reparaciones...</p>
+              <p className="text-gray-600">Cargando reparaciones...</p>
             </div>
           ) : reparaciones.length === 0 ? (
             <div className="p-12 text-center">
-              <p className="text-primary-600 mb-4">No hay reparaciones registradas</p>
+              <p className="text-gray-600 mb-4">No hay reparaciones registradas</p>
               <Link href="/reparaciones/nueva">
                 <Button variant="primary">
                   Crear Nueva Reparación
@@ -156,56 +156,56 @@ export default function Dashboard() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-primary-200 bg-primary-50">
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-900">
+                  <tr className="border-b border-gray-200 bg-gray-50">
+                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       ID
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-900">
+                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Cliente
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-900">
+                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Equipo
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-900">
+                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Electricista
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-900">
+                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Estado
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-900">
+                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Acción
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-primary-200">
+                <tbody className="divide-y divide-gray-200">
                   {reparaciones.map((rep) => (
-                    <tr key={rep.id} className="hover:bg-primary-50 transition-colors">
-                      <td className="px-6 py-4 text-sm text-primary-900 font-medium">
+                    <tr key={rep.id} className="hover:bg-gray-50 transition-colors duration-150">
+                      <td className="px-8 py-5 text-sm text-gray-900 font-medium">
                         #{rep.id}
                       </td>
-                      <td className="px-6 py-4 text-sm text-primary-900">
+                      <td className="px-8 py-5 text-sm text-gray-900">
                         {rep.equipo.cliente.nombre}
                       </td>
-                      <td className="px-6 py-4 text-sm text-primary-600">
+                      <td className="px-8 py-5 text-sm text-gray-700">
                         {rep.equipo.descripcion}
                       </td>
-                      <td className="px-6 py-4 text-sm text-primary-600">
-                        {rep.electricista || <span className="italic text-primary-400">Sin asignar</span>}
+                      <td className="px-8 py-5 text-sm text-gray-700">
+                        {rep.electricista || <span className="italic text-gray-500">Sin asignar</span>}
                       </td>
-                      <td className="px-6 py-4 flex items-center gap-2">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-900 border border-primary-200">
+                      <td className="px-8 py-5 flex items-center gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-900 border border-blue-200">
                           {getEstadoLabel(rep.estado)}
                         </span>
                         {!rep.electricista && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning-50 text-warning-700 border border-warning-200">
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-900 border border-amber-200">
                             Incompleta
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-sm">
+                      <td className="px-8 py-5 text-sm">
                         <Link
                           href={`/reparaciones/${rep.id}`}
-                          className="text-primary-700 hover:text-primary-900 font-medium transition-colors"
+                          className="text-blue-700 hover:text-blue-900 font-medium transition-colors"
                         >
                           Ver
                         </Link>
