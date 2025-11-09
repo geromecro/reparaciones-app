@@ -49,7 +49,6 @@ export async function GET(
       reparacion: {
         id: reparacion.id,
         estado: reparacion.estado,
-        electricista: reparacion.electricista,
         createdAt: reparacion.createdAt
       },
       historial: reparacion.historial

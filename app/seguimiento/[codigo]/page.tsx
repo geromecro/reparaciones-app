@@ -17,7 +17,6 @@ interface Seguimiento {
   reparacion: {
     id: number
     estado: string
-    electricista: string
     createdAt: string
   }
   historial: Array<{
@@ -147,10 +146,6 @@ export default function SeguimientoReparacion() {
               <p className="text-primary-900 font-medium">
                 {new Date(data.equipo.fechaRecepcion).toLocaleDateString('es-AR')}
               </p>
-            </div>
-            <div>
-              <p className="text-sm text-primary-600">Electricista Asignado</p>
-              <p className="text-primary-900 font-medium">{data.reparacion.electricista}</p>
             </div>
           </div>
         </div>
