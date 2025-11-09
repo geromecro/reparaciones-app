@@ -228,8 +228,16 @@ export default function DetallesReparacion() {
     )
   }
 
+  const isModalOpen = !!editingRepuesto || (editingCotizacion && !!reparacion?.valorizacion?.cotizacion)
+
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div
+      className="min-h-screen bg-gray-50 p-8"
+      style={{
+        pointerEvents: isModalOpen ? 'none' : 'auto',
+        opacity: isModalOpen ? 0.5 : 1
+      }}
+    >
       {/* Repuesto Edit Modal */}
       <Modal
         isOpen={!!editingRepuesto}
