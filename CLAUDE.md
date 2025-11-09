@@ -393,6 +393,51 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
     - `d72fda2`: Replace auto-generated numeroInterno with manual user input
     - `e0da43d`: Simplify repair states to only 4 essential states
 
+### Phase 5.7: Quick Creation + Later Editing Workflow (Nov 9, 2025)
+  - ✅ **Simplified Nueva Reparación Form**: Make electricista optional
+    - Removed required validation on electricista field
+    - Added "Sin asignar" option in Step 3 dropdown
+    - Default value changed from "Arnau" to empty string
+    - Allows creating repair in ~30 seconds with minimal info
+  - ✅ **Dashboard Incomplete Indicator**:
+    - New "Incompleta" badge (yellow) appears for repairs without electricista
+    - Electricista column shows "Sin asignar" (italic, gray) when null
+    - Badge appears next to estado badge for easy visibility
+    - Helps identify which repairs need information completion
+  - ✅ **Edit Basic Info in Repair Detail**:
+    - New "Editar" button in "Información de Reparación" section
+    - Toggles between view and edit mode
+    - Edit form includes:
+      - Electricista dropdown (Sin asignar, Arnau, Ivan)
+      - Número de Precinto (text input, optional)
+    - "Guardar" and "Cancelar" buttons
+    - Updates via PUT `/api/reparaciones/[id]`
+    - Shows success alert on save, refreshes page data
+  - ✅ **Updated Schema**:
+    - Made `electricista` field optional in Reparacion model (`String?`)
+    - Allows null values for incomplete repairs
+  - ✅ **API Changes**:
+    - POST /api/reparaciones: Removed electricista validation (only equipoId required)
+    - PUT /api/reparaciones/[id]: Already supported electricista updates
+  - ✅ **Use Case Flow**:
+    1. Cashier receives equipment, gives customer document with number
+    2. Creates repair record in ~30 seconds (no electricista assigned)
+    3. Dashboard flags repair as "Incompleta"
+    4. Later, when cashier has time or electricista arrives:
+       - Opens repair detail page
+       - Clicks "Editar" in Reparación Info section
+       - Assigns electricista and enters precinto number
+       - Clicks "Guardar"
+    5. Repair marked as complete, no longer shows "Incompleta" badge
+  - ✅ **Commits** (Nov 9, 2025):
+    - `14afa46`: Implement quick creation + later editing workflow (Option B)
+  - **Benefits**:
+    - Reduces friction in high-pressure moments (equipment arrival)
+    - Allows flexible information completion when time permits
+    - Dashboard provides clear visual indication of incomplete records
+    - Simple, non-intrusive editing interface
+    - No disruption to existing workflows
+
 ### Phase 6: Optional Future Enhancements
   - ⏳ PDF generation for invoices and delivery notes
   - ⏳ Advanced search and filtering by date/cliente/estado
