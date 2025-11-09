@@ -229,6 +229,124 @@ export default function DetallesReparacion() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
+      {/* Modals at root level for proper overlay */}
+      {editingRepuesto && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Editar Repuesto</h3>
+            <form onSubmit={updateRepuesto}>
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Cantidad
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    value={editingRepuesto.cantidad}
+                    onChange={(e) => setEditingRepuesto({...editingRepuesto, cantidad: parseInt(e.target.value) || 1})}
+                    min="1"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Precio Unitario
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    value={editingRepuesto.importeUnitario}
+                    onChange={(e) => setEditingRepuesto({...editingRepuesto, importeUnitario: parseFloat(e.target.value) || 0})}
+                    min="0"
+                    step="0.01"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                >
+                  Guardar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditingRepuesto(null)}
+                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {editingCotizacion && reparacion.valorizacion?.cotizacion && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Editar Cotización</h3>
+            <form onSubmit={updateCotizacion}>
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Importe Original
+                  </label>
+                  <input
+                    type="number"
+                    disabled
+                    value={reparacion.valorizacion.cotizacion.importeOriginal}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Se actualiza automáticamente con repuestos</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Ajuste Pablo
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    value={cotizacionAjuste}
+                    onChange={(e) => setCotizacionAjuste(parseFloat(e.target.value) || 0)}
+                    step="0.01"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Importe Final
+                  </label>
+                  <input
+                    type="number"
+                    disabled
+                    value={(reparacion.valorizacion.cotizacion.importeOriginal + cotizacionAjuste).toFixed(2)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 font-semibold"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                >
+                  Guardar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditingCotizacion(false)}
+                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex justify-between items-start">
@@ -418,60 +536,6 @@ export default function DetallesReparacion() {
             </form>
           )}
 
-          {editingRepuesto && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Editar Repuesto</h3>
-                <form onSubmit={updateRepuesto}>
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Cantidad
-                      </label>
-                      <input
-                        type="number"
-                        required
-                        value={editingRepuesto.cantidad}
-                        onChange={(e) => setEditingRepuesto({...editingRepuesto, cantidad: parseInt(e.target.value) || 1})}
-                        min="1"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Precio Unitario
-                      </label>
-                      <input
-                        type="number"
-                        required
-                        value={editingRepuesto.importeUnitario}
-                        onChange={(e) => setEditingRepuesto({...editingRepuesto, importeUnitario: parseFloat(e.target.value) || 0})}
-                        min="0"
-                        step="0.01"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      type="submit"
-                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                    >
-                      Guardar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setEditingRepuesto(null)}
-                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-
           {reparacion.repuestosUsados.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -588,69 +652,6 @@ export default function DetallesReparacion() {
                 Crear Valorización
               </button>
             </form>
-          )}
-
-          {editingCotizacion && reparacion.valorizacion?.cotizacion && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Editar Cotización</h3>
-                <form onSubmit={updateCotizacion}>
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Importe Original
-                      </label>
-                      <input
-                        type="number"
-                        disabled
-                        value={reparacion.valorizacion.cotizacion.importeOriginal}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Se actualiza automáticamente con repuestos</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Ajuste Pablo
-                      </label>
-                      <input
-                        type="number"
-                        required
-                        value={cotizacionAjuste}
-                        onChange={(e) => setCotizacionAjuste(parseFloat(e.target.value) || 0)}
-                        step="0.01"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Importe Final
-                      </label>
-                      <input
-                        type="number"
-                        disabled
-                        value={(reparacion.valorizacion.cotizacion.importeOriginal + cotizacionAjuste).toFixed(2)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 font-semibold"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      type="submit"
-                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                    >
-                      Guardar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setEditingCotizacion(false)}
-                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
           )}
 
           {reparacion.valorizacion ? (
