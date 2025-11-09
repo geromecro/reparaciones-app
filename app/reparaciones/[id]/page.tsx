@@ -494,14 +494,12 @@ export default function DetallesReparacion() {
         <div className="bg-white rounded-lg shadow p-6 mb-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="font-semibold text-gray-900">Repuestos Utilizados</h2>
-            {!reparacion.valorizacion && (
-              <button
-                onClick={() => setShowFormRepuesto(!showFormRepuesto)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
-              >
-                {showFormRepuesto ? 'Cancelar' : '+ Agregar Repuesto'}
-              </button>
-            )}
+            <button
+              onClick={() => setShowFormRepuesto(!showFormRepuesto)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
+            >
+              {showFormRepuesto ? 'Cancelar' : '+ Agregar Repuesto'}
+            </button>
           </div>
 
           {showFormRepuesto && (
