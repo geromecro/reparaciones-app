@@ -53,6 +53,8 @@ export default function DetallesReparacion() {
   const [editingRepuesto, setEditingRepuesto] = useState<EditingRepuesto | null>(null)
   const [editingCotizacion, setEditingCotizacion] = useState(false)
   const [cotizacionAjuste, setCotizacionAjuste] = useState(0)
+  const [editingBasicInfo, setEditingBasicInfo] = useState(false)
+  const [basicInfoEdits, setBasicInfoEdits] = useState({ electricista: '', precintoNumero: '' })
 
   const [repuesto, setRepuesto] = useState({
     codigoRepuesto: '',
@@ -212,6 +214,42 @@ export default function DetallesReparacion() {
       console.error('Error updating cotizacion:', error)
       alert('Error al actualizar cotización')
     }
+  }
+
+  const updateBasicInfo = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!reparacion) return
+
+    try {
+      const res = await fetch(`/api/reparaciones/${reparacion.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          electricista: basicInfoEdits.electricista || null,
+          precintoNumero: basicInfoEdits.precintoNumero || null
+        })
+      })
+
+      if (res.ok) {
+        const updatedReparacion = await res.json()
+        setReparacion(updatedReparacion)
+        setEditingBasicInfo(false)
+        alert('Información actualizada correctamente')
+      } else {
+        alert('Error al actualizar información')
+      }
+    } catch (error) {
+      console.error('Error updating basic info:', error)
+      alert('Error al actualizar información')
+    }
+  }
+
+  const handleEditBasicInfoClick = () => {
+    setBasicInfoEdits({
+      electricista: reparacion?.electricista || '',
+      precintoNumero: reparacion?.precintoNumero || ''
+    })
+    setEditingBasicInfo(true)
   }
 
   const totalRepuestos = reparacion?.repuestosUsados.reduce((sum, r) => sum + r.subtotal, 0) || 0
@@ -426,29 +464,85 @@ export default function DetallesReparacion() {
 
           {/* Reparacion Info */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="font-semibold text-gray-900 mb-4">Información de Reparación</h2>
-            <div className="space-y-3 text-sm">
-              <div>
-                <p className="text-gray-600">Electricista</p>
-                <p className="font-semibold text-gray-900">{reparacion.electricista}</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Precinto</p>
-                <p className="font-semibold text-gray-900">{reparacion.precintoNumero || 'N/A'}</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Estado</p>
-                <div className="mt-2">
-                  <EstadoSelector
-                    estadoActual={reparacion.estado}
-                    reparacionId={reparacion.id}
-                    onEstadoChanged={(nuevoEstado) => {
-                      setReparacion({...reparacion, estado: nuevoEstado})
-                    }}
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="font-semibold text-gray-900">Información de Reparación</h2>
+              {!editingBasicInfo && (
+                <button
+                  onClick={handleEditBasicInfoClick}
+                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                >
+                  Editar
+                </button>
+              )}
+            </div>
+            {editingBasicInfo ? (
+              <form onSubmit={updateBasicInfo} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Electricista
+                  </label>
+                  <select
+                    value={basicInfoEdits.electricista}
+                    onChange={(e) => setBasicInfoEdits({...basicInfoEdits, electricista: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Sin asignar</option>
+                    <option value="Arnau">Arnau</option>
+                    <option value="Ivan">Ivan</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Número de Precinto
+                  </label>
+                  <input
+                    type="text"
+                    value={basicInfoEdits.precintoNumero}
+                    onChange={(e) => setBasicInfoEdits({...basicInfoEdits, precintoNumero: e.target.value})}
+                    placeholder="Ej: PRECINTO-001"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+                <div className="flex gap-2 pt-4">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditingBasicInfo(false)}
+                    className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="space-y-3 text-sm">
+                <div>
+                  <p className="text-gray-600">Electricista</p>
+                  <p className="font-semibold text-gray-900">{reparacion.electricista || 'Sin asignar'}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600">Precinto</p>
+                  <p className="font-semibold text-gray-900">{reparacion.precintoNumero || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600">Estado</p>
+                  <div className="mt-2">
+                    <EstadoSelector
+                      estadoActual={reparacion.estado}
+                      reparacionId={reparacion.id}
+                      onEstadoChanged={(nuevoEstado) => {
+                        setReparacion({...reparacion, estado: nuevoEstado})
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 

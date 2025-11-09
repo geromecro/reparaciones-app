@@ -32,7 +32,7 @@ export default function NuevaReparacion() {
     numeroInterno: ''
   })
   const [reparacion, setReparacion] = useState({
-    electricista: 'Arnau',
+    electricista: '',
     precintoNumero: ''
   })
 
@@ -356,13 +356,14 @@ export default function NuevaReparacion() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Electricista *
+                  Electricista
                 </label>
                 <select
                   value={reparacion.electricista}
                   onChange={(e) => setReparacion({...reparacion, electricista: e.target.value})}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
+                  <option value="">Sin asignar</option>
                   <option value="Arnau">Arnau</option>
                   <option value="Ivan">Ivan</option>
                 </select>

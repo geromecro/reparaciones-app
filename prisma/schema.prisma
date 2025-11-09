@@ -43,7 +43,7 @@ model Reparacion {
   id                    Int               @id @default(autoincrement())
   equipoId              Int
   equipo                Equipo            @relation(fields: [equipoId], references: [id], onDelete: Cascade)
-  electricista          String
+  electricista          String?
   precintoNumero        String?
   fechaAsignacion       DateTime          @default(now())
   fechaEntregaEstimada  DateTime?

@@ -12,7 +12,7 @@ interface Reparacion {
     }
     descripcion: string
   }
-  electricista: string
+  electricista: string | null
   estado: string
   createdAt: string
 }
@@ -190,12 +190,17 @@ export default function Dashboard() {
                         {rep.equipo.descripcion}
                       </td>
                       <td className="px-6 py-4 text-sm text-primary-600">
-                        {rep.electricista}
+                        {rep.electricista || <span className="italic text-primary-400">Sin asignar</span>}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 flex items-center gap-2">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-900 border border-primary-200">
                           {getEstadoLabel(rep.estado)}
                         </span>
+                        {!rep.electricista && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning-50 text-warning-700 border border-warning-200">
+                            Incompleta
+                          </span>
+                        )}
                       </td>
                       <td className="px-6 py-4 text-sm">
                         <Link

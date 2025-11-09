@@ -36,9 +36,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { equipoId, electricista, precintoNumero, fechaEntregaEstimada } = body
 
-    if (!equipoId || !electricista) {
+    if (!equipoId) {
       return NextResponse.json(
-        { error: 'equipoId y electricista son requeridos' },
+        { error: 'equipoId es requerido' },
         { status: 400 }
       )
     }
