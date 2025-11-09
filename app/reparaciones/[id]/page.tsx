@@ -34,6 +34,12 @@ interface Reparacion {
   createdAt: string
 }
 
+interface EditingRepuesto {
+  id: number
+  cantidad: number
+  importeUnitario: number
+}
+
 export default function DetallesReparacion() {
   const params = useParams()
   const id = params.id as string
@@ -41,6 +47,9 @@ export default function DetallesReparacion() {
   const [loading, setLoading] = useState(true)
   const [showFormRepuesto, setShowFormRepuesto] = useState(false)
   const [showFormValorizacion, setShowFormValorizacion] = useState(false)
+  const [editingRepuesto, setEditingRepuesto] = useState<EditingRepuesto | null>(null)
+  const [editingCotizacion, setEditingCotizacion] = useState(false)
+  const [cotizacionAjuste, setCotizacionAjuste] = useState(0)
 
   const [repuesto, setRepuesto] = useState({
     codigoRepuesto: '',
@@ -117,6 +126,86 @@ export default function DetallesReparacion() {
       }
     } catch (error) {
       console.error('Error creating valorizacion:', error)
+    }
+  }
+
+  const updateRepuesto = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!editingRepuesto) return
+
+    try {
+      const res = await fetch(`/api/repuestos/${editingRepuesto.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cantidad: parseInt(editingRepuesto.cantidad.toString()),
+          importeUnitario: parseFloat(editingRepuesto.importeUnitario.toString())
+        })
+      })
+
+      if (res.ok) {
+        setEditingRepuesto(null)
+        fetchReparacion()
+      } else {
+        const error = await res.json()
+        console.error('Error updating repuesto:', error)
+        alert('Error al actualizar repuesto')
+      }
+    } catch (error) {
+      console.error('Error updating repuesto:', error)
+      alert('Error al actualizar repuesto')
+    }
+  }
+
+  const deleteRepuesto = async (repuestoId: number) => {
+    if (!confirm('¿Está seguro de que desea eliminar este repuesto?')) {
+      return
+    }
+
+    try {
+      const res = await fetch(`/api/repuestos/${repuestoId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      })
+
+      if (res.ok) {
+        fetchReparacion()
+      } else {
+        const error = await res.json()
+        console.error('Error deleting repuesto:', error)
+        alert('Error al eliminar repuesto')
+      }
+    } catch (error) {
+      console.error('Error deleting repuesto:', error)
+      alert('Error al eliminar repuesto')
+    }
+  }
+
+  const updateCotizacion = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!reparacion?.valorizacion?.cotizacion) return
+
+    try {
+      const res = await fetch(`/api/cotizaciones/${reparacion.valorizacion.cotizacion.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ajustePablo: parseFloat(cotizacionAjuste.toString())
+        })
+      })
+
+      if (res.ok) {
+        setEditingCotizacion(false)
+        setCotizacionAjuste(0)
+        fetchReparacion()
+      } else {
+        const error = await res.json()
+        console.error('Error updating cotizacion:', error)
+        alert('Error al actualizar cotización')
+      }
+    } catch (error) {
+      console.error('Error updating cotizacion:', error)
+      alert('Error al actualizar cotización')
     }
   }
 
@@ -329,6 +418,60 @@ export default function DetallesReparacion() {
             </form>
           )}
 
+          {editingRepuesto && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Editar Repuesto</h3>
+                <form onSubmit={updateRepuesto}>
+                  <div className="space-y-4 mb-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Cantidad
+                      </label>
+                      <input
+                        type="number"
+                        required
+                        value={editingRepuesto.cantidad}
+                        onChange={(e) => setEditingRepuesto({...editingRepuesto, cantidad: parseInt(e.target.value) || 1})}
+                        min="1"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Precio Unitario
+                      </label>
+                      <input
+                        type="number"
+                        required
+                        value={editingRepuesto.importeUnitario}
+                        onChange={(e) => setEditingRepuesto({...editingRepuesto, importeUnitario: parseFloat(e.target.value) || 0})}
+                        min="0"
+                        step="0.01"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                    >
+                      Guardar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingRepuesto(null)}
+                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
           {reparacion.repuestosUsados.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -339,6 +482,7 @@ export default function DetallesReparacion() {
                     <th className="px-4 py-2 text-center text-gray-900">Cantidad</th>
                     <th className="px-4 py-2 text-right text-gray-900">Precio Unit.</th>
                     <th className="px-4 py-2 text-right text-gray-900">Subtotal</th>
+                    <th className="px-4 py-2 text-center text-gray-900">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -349,10 +493,28 @@ export default function DetallesReparacion() {
                       <td className="px-4 py-2 text-center">{rep.cantidad}</td>
                       <td className="px-4 py-2 text-right">${rep.importeUnitario.toFixed(2)}</td>
                       <td className="px-4 py-2 text-right font-semibold">${rep.subtotal.toFixed(2)}</td>
+                      <td className="px-4 py-2 text-center space-x-2">
+                        {!reparacion.valorizacion && (
+                          <>
+                            <button
+                              onClick={() => setEditingRepuesto({id: rep.id, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})}
+                              className="text-blue-600 hover:text-blue-800 text-xs font-medium"
+                            >
+                              Editar
+                            </button>
+                            <button
+                              onClick={() => deleteRepuesto(rep.id)}
+                              className="text-red-600 hover:text-red-800 text-xs font-medium"
+                            >
+                              Eliminar
+                            </button>
+                          </>
+                        )}
+                      </td>
                     </tr>
                   ))}
                   <tr className="font-semibold bg-gray-50">
-                    <td colSpan={4} className="px-4 py-2 text-right">Total Repuestos:</td>
+                    <td colSpan={5} className="px-4 py-2 text-right">Total Repuestos:</td>
                     <td className="px-4 py-2 text-right">${totalRepuestos.toFixed(2)}</td>
                   </tr>
                 </tbody>
@@ -428,6 +590,69 @@ export default function DetallesReparacion() {
             </form>
           )}
 
+          {editingCotizacion && reparacion.valorizacion?.cotizacion && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Editar Cotización</h3>
+                <form onSubmit={updateCotizacion}>
+                  <div className="space-y-4 mb-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Importe Original
+                      </label>
+                      <input
+                        type="number"
+                        disabled
+                        value={reparacion.valorizacion.cotizacion.importeOriginal}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Se actualiza automáticamente con repuestos</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Ajuste Pablo
+                      </label>
+                      <input
+                        type="number"
+                        required
+                        value={cotizacionAjuste}
+                        onChange={(e) => setCotizacionAjuste(parseFloat(e.target.value) || 0)}
+                        step="0.01"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Importe Final
+                      </label>
+                      <input
+                        type="number"
+                        disabled
+                        value={(reparacion.valorizacion.cotizacion.importeOriginal + cotizacionAjuste).toFixed(2)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 font-semibold"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                    >
+                      Guardar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingCotizacion(false)}
+                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
           {reparacion.valorizacion ? (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -445,7 +670,35 @@ export default function DetallesReparacion() {
                 <p className="text-3xl font-bold text-gray-900">${reparacion.valorizacion.subtotal.toFixed(2)}</p>
               </div>
 
-              {!reparacion.valorizacion.cotizacion && (
+              {reparacion.valorizacion.cotizacion ? (
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <div className="mb-4">
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <p className="text-gray-600 text-xs">Importe Original</p>
+                        <p className="font-semibold text-gray-900">${reparacion.valorizacion.cotizacion.importeOriginal.toFixed(2)}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600 text-xs">Ajuste Pablo</p>
+                        <p className="font-semibold text-gray-900">${reparacion.valorizacion.cotizacion.ajustePablo.toFixed(2)}</p>
+                      </div>
+                    </div>
+                    <div className="border-t pt-4">
+                      <p className="text-gray-600 text-xs mb-1">Importe Final</p>
+                      <p className="text-2xl font-bold text-gray-900">${reparacion.valorizacion.cotizacion.importeFinal.toFixed(2)}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setEditingCotizacion(true)
+                      setCotizacionAjuste(reparacion.valorizacion.cotizacion.ajustePablo)
+                    }}
+                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
+                  >
+                    Editar Cotización
+                  </button>
+                </div>
+              ) : (
                 <Link
                   href={`/cotizaciones/nueva?valorizacionId=${reparacion.valorizacion.id}`}
                   className="block w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-center text-sm mt-4"
