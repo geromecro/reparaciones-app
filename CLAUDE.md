@@ -337,6 +337,28 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
   - ✅ **All changes reflected in real-time** on internal panel
   - ✅ **Public tracking link** automatically reflects updated repuestos list
 
+### Phase 5.5: Modal Overlay UI Improvements (Nov 9, 2025)
+  - ✅ **Created Reusable Modal Component**: `components/Modal.tsx` using React Portal (createPortal)
+    - Renders modals at document.body level to avoid stacking context issues
+    - Uses explicit inline CSS styles (not Tailwind) for guaranteed rendering
+    - Dark overlay: `rgba(0, 0, 0, 0.5)` with `zIndex: 9999`
+    - Clean white modal box with shadow, border-radius, and auto-scrolling content
+  - ✅ **Enhanced Modal Visibility**: Background dimming and interaction blocking
+    - When modal is open: `pointerEvents: 'none'` disables interaction with background
+    - When modal is open: `opacity: 0.5` dims background content
+    - Creates clear visual separation between modal and page content
+    - Background automatically returns to normal when modal closes
+  - ✅ **Fixed TypeScript Errors**: Installed `@types/react-dom` for createPortal type support
+  - ✅ **Build Configuration**: App builds successfully with all TypeScript checks passing
+  - ✅ **Commits**:
+    - `57db34b`: Add pointer-events and opacity styling to improve modal overlay visibility
+    - `fa3ce45`: Add @types/react-dom for TypeScript support
+  - **Notes**:
+    - Modal pattern follows standard web UI patterns (dark overlay + centered content)
+    - Dimmed background prevents accidental clicks on page elements
+    - Inline styles used instead of Tailwind to avoid CSS specificity/compilation issues
+    - Solution is "clear and simple" as requested (no complex animations or transitions)
+
 ### Phase 6: Optional Future Enhancements
   - ⏳ PDF generation for invoices and delivery notes
   - ⏳ Advanced search and filtering by date/cliente/estado
