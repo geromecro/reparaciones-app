@@ -425,7 +425,7 @@ export default function DetallesReparacion() {
         <div className="mb-20 flex justify-between items-start">
           <div>
             <h1 className="text-5xl font-bold text-gray-900 mb-3">
-              Reparación #{reparacion.id}
+              🎨 TEST MINIMALISTA 🎨 - Reparación #{reparacion.id}
             </h1>
             <p className="text-xl text-gray-600">
               {reparacion.equipo.cliente.nombre}
