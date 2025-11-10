@@ -1,24 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Minimalista design system v2.0 - Cache busting
+  // Minimalista design system v2.0 - Force rebuild - Cache busting v3
   generateEtags: false,
+  // Force full rebuild on every deploy
+  onDemandEntries: {
+    maxInactiveAge: 0,
+    pagesBufferLength: 0,
+  },
   headers: async () => {
     return [
       {
-        source: '/reparaciones/:id',
+        source: '/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
-          },
-          {
-            key: 'Pragma',
-            value: 'no-cache',
-          },
-          {
-            key: 'Expires',
-            value: '0',
+            value: 'public, max-age=0, s-maxage=0, must-revalidate',
           },
         ],
       },
