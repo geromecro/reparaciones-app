@@ -139,28 +139,28 @@ export default function NuevaReparacion() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">
+        <div className="mb-8 border-b border-gray-300 pb-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Nueva Reparación
           </h1>
-          <p className="text-base text-gray-600">
+          <p className="text-sm text-gray-600">
             Paso {step} de 3
           </p>
         </div>
 
         {/* Progress Bar */}
-        <div className="mb-16 bg-white rounded-lg shadow-md p-12 border border-gray-100">
+        <div className="mb-12 bg-white border border-gray-300 p-8">
           <div className="flex justify-between items-center gap-8">
             {[1, 2, 3].map(s => (
               <div key={s} className="flex flex-col items-center flex-1">
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-200 ${
+                <div className={`w-12 h-12 rounded flex items-center justify-center font-bold text-sm transition-all duration-200 ${
                   s <= step
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 text-gray-600'
                 }`}>
                   {s}
                 </div>
-                <p className="text-xs font-medium text-gray-700 mt-4 text-center">
+                <p className="text-xs font-medium text-gray-700 mt-3 text-center">
                   {s === 1 && 'Cliente'}
                   {s === 2 && 'Equipo'}
                   {s === 3 && 'Reparación'}
@@ -171,7 +171,7 @@ export default function NuevaReparacion() {
         </div>
 
         {/* Forms */}
-        <div className="bg-white rounded-lg shadow-md p-10 border border-gray-100">
+        <div className="bg-white border border-gray-300 p-10">
           {step === 1 && (
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-8">
@@ -192,17 +192,17 @@ export default function NuevaReparacion() {
                         searchClientes(e.target.value)
                       }}
                       placeholder="Nombre del cliente..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
 
                   {clientes.length > 0 ? (
-                    <div className="space-y-3 bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <div className="space-y-0 bg-gray-50 border border-gray-300">
                       {clientes.map(c => (
                         <button
                           key={c.id}
                           onClick={() => selectCliente(c)}
-                          className="w-full text-left p-5 border border-gray-300 rounded-lg hover:bg-white hover:border-blue-500 transition"
+                          className="w-full text-left p-4 border-b border-gray-300 hover:bg-white last:border-b-0 transition"
                         >
                           <p className="font-semibold text-gray-900">{c.nombre}</p>
                           <p className="text-sm text-gray-600">{c.empresa || 'Sin empresa'}</p>
@@ -214,7 +214,7 @@ export default function NuevaReparacion() {
 
                   <button
                     onClick={() => setShowNewCliente(true)}
-                    className="w-full bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 font-medium transition-colors"
+                    className="w-full bg-gray-600 text-white px-4 py-3 hover:bg-gray-700 font-medium transition-colors"
                   >
                     + Crear Nuevo Cliente
                   </button>
@@ -230,7 +230,7 @@ export default function NuevaReparacion() {
                       required
                       value={nuevoCliente.nombre}
                       onChange={(e) => setNuevoCliente({...nuevoCliente, nombre: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div>
@@ -241,7 +241,7 @@ export default function NuevaReparacion() {
                       type="text"
                       value={nuevoCliente.empresa}
                       onChange={(e) => setNuevoCliente({...nuevoCliente, empresa: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div>
@@ -253,7 +253,7 @@ export default function NuevaReparacion() {
                       required
                       value={nuevoCliente.telefono}
                       onChange={(e) => setNuevoCliente({...nuevoCliente, telefono: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div>
@@ -264,21 +264,21 @@ export default function NuevaReparacion() {
                       type="email"
                       value={nuevoCliente.email}
                       onChange={(e) => setNuevoCliente({...nuevoCliente, email: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div className="flex gap-4 pt-6">
                     <button
                       type="button"
                       onClick={() => setShowNewCliente(false)}
-                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 rounded-lg hover:bg-gray-400 font-medium transition-colors"
+                      className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 hover:bg-gray-400 font-medium transition-colors"
                     >
                       Cancelar
                     </button>
                     <button
                       type="submit"
                       disabled={loading}
-                      className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
+                      className="flex-1 bg-blue-600 text-white px-4 py-3 hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
                     >
                       {loading ? 'Creando...' : 'Crear Cliente'}
                     </button>
@@ -290,7 +290,7 @@ export default function NuevaReparacion() {
 
           {step === 2 && (
             <form onSubmit={createEquipo} className="space-y-6">
-              <div className="pb-8 border-b border-gray-200">
+              <div className="pb-8 border-b border-gray-300">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Datos del Equipo
                 </h2>
@@ -309,7 +309,7 @@ export default function NuevaReparacion() {
                   value={equipo.numeroInterno}
                   onChange={(e) => setEquipo({...equipo, numeroInterno: e.target.value})}
                   placeholder="Ej: 2025-001"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -322,7 +322,7 @@ export default function NuevaReparacion() {
                   value={equipo.descripcion}
                   onChange={(e) => setEquipo({...equipo, descripcion: e.target.value})}
                   placeholder="Ej: Alternador Bosch 150A"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                   rows={4}
                 />
               </div>
@@ -331,14 +331,14 @@ export default function NuevaReparacion() {
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 rounded-lg hover:bg-gray-400 font-medium transition-colors"
+                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 hover:bg-gray-400 font-medium transition-colors"
                 >
                   ← Anterior
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
+                  className="flex-1 bg-blue-600 text-white px-4 py-3 hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
                 >
                   {loading ? 'Guardando...' : 'Siguiente →'}
                 </button>
@@ -348,7 +348,7 @@ export default function NuevaReparacion() {
 
           {step === 3 && (
             <form onSubmit={createReparacion} className="space-y-6">
-              <div className="pb-8 border-b border-gray-200">
+              <div className="pb-8 border-b border-gray-300">
                 <h2 className="text-2xl font-bold text-gray-900">
                   Asignar Reparación
                 </h2>
@@ -361,7 +361,7 @@ export default function NuevaReparacion() {
                 <select
                   value={reparacion.electricista}
                   onChange={(e) => setReparacion({...reparacion, electricista: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Sin asignar</option>
                   <option value="Arnau">Arnau</option>
@@ -378,7 +378,7 @@ export default function NuevaReparacion() {
                   value={reparacion.precintoNumero}
                   onChange={(e) => setReparacion({...reparacion, precintoNumero: e.target.value})}
                   placeholder="Ej: PRECINTO-001"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -386,14 +386,14 @@ export default function NuevaReparacion() {
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 rounded-lg hover:bg-gray-400 font-medium transition-colors"
+                  className="flex-1 bg-gray-300 text-gray-900 px-4 py-3 hover:bg-gray-400 font-medium transition-colors"
                 >
                   ← Anterior
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 font-medium transition-colors"
+                  className="flex-1 bg-green-600 text-white px-4 py-3 hover:bg-green-700 disabled:opacity-50 font-medium transition-colors"
                 >
                   {loading ? 'Creando...' : 'Crear Reparación'}
                 </button>

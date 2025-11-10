@@ -71,7 +71,7 @@ export default function EstadoSelector({
       <button
         onClick={() => !loading && setIsOpen(!isOpen)}
         disabled={loading}
-        className={`inline-flex items-center px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg ${
+        className={`inline-flex items-center px-6 py-3 text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
           estadoActualInfo ? variantStyles[estadoActualInfo.variant as keyof typeof variantStyles] : 'bg-blue-100 text-blue-900 border border-blue-200'
         }`}
       >
@@ -80,20 +80,20 @@ export default function EstadoSelector({
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-3 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
+        <div className="absolute top-full left-0 mt-3 w-80 bg-white border border-gray-300 z-50">
           <div className="max-h-96 overflow-y-auto">
             {ESTADOS.map(estado => (
               <button
                 key={estado.value}
                 onClick={() => handleEstadoChange(estado.value)}
                 disabled={loading}
-                className={`w-full text-left px-6 py-4 border-b border-gray-100 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`w-full text-left px-6 py-4 border-b border-gray-300 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed ${
                   estadoActual === estado.value ? 'bg-blue-50 font-semibold' : ''
                 }`}
               >
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <span className={`inline-flex items-center px-4 py-2 rounded-lg text-xs font-semibold ${variantStyles[estado.variant as keyof typeof variantStyles]}`}>
+                    <span className={`inline-flex items-center px-4 py-2 text-xs font-semibold ${variantStyles[estado.variant as keyof typeof variantStyles]}`}>
                       {estado.label}
                     </span>
                   </div>
@@ -108,7 +108,7 @@ export default function EstadoSelector({
           </div>
 
           {error && (
-            <div className="px-4 py-3 bg-red-50 border-t border-red-200 text-red-700 text-sm font-medium">
+            <div className="px-4 py-3 bg-red-50 border-t border-red-300 text-red-700 text-sm font-medium">
               {error}
             </div>
           )}
