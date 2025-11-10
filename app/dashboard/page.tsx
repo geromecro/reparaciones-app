@@ -105,32 +105,32 @@ export default function Dashboard() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-8 py-12">
+      <div className="max-w-full mx-auto px-6 py-6">
         {/* Header */}
-        <div className="mb-20 flex justify-between items-start">
+        <div className="mb-6 flex justify-between items-center border-b border-gray-300 pb-4">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-2xl font-bold text-gray-900">
               Dashboard
             </h1>
-            <p className="text-base text-gray-600">
-              {reparaciones.length} reparaciones registradas
+            <p className="text-xs text-gray-600 mt-1">
+              {reparaciones.length} total | En Inicio: {reparaciones.filter(r => ['RECIBIDO', 'PRECINTADO', 'ASIGNADO'].includes(r.estado)).length} | En Trabajo: {reparaciones.filter(r => ['DIAGNOSTICO', 'EN_REPARACION', 'ESPERANDO_REPUESTOS'].includes(r.estado)).length}
             </p>
           </div>
           <Link href="/">
-            <Button variant="secondary">
-              ← Volver al Inicio
+            <Button variant="secondary" className="text-xs">
+              ← Inicio
             </Button>
           </Link>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        {/* Stats Grid - Compact */}
+        <div className="grid grid-cols-4 gap-4 mb-8 bg-white border border-gray-300">
           {statCards.map((stat, idx) => (
-            <div key={idx} className="bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-lg transition-all duration-200 p-10">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-4">
+            <div key={idx} className="border-r border-gray-300 px-6 py-4 last:border-r-0">
+              <p className="text-xs font-medium text-gray-600 uppercase">
                 {stat.label}
               </p>
-              <p className="text-5xl font-bold text-gray-900">
+              <p className="text-3xl font-bold text-gray-900 mt-2">
                 {stat.count}
               </p>
             </div>
@@ -138,7 +138,7 @@ export default function Dashboard() {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
+        <div className="bg-white border border-gray-300 overflow-hidden">
           {loading ? (
             <div className="p-16 text-center">
               <p className="text-gray-600">Cargando reparaciones...</p>

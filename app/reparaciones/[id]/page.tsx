@@ -420,71 +420,73 @@ export default function DetallesReparacion() {
         </form>
       </Modal>
 
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
-        <div className="mb-16 flex justify-between items-start">
+        <div className="mb-8 flex justify-between items-center border-b border-gray-300 pb-6">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-3xl font-bold text-gray-900">
               Reparación #{reparacion.id}
             </h1>
-            <p className="text-base text-gray-600">
+            <p className="text-sm text-gray-600 mt-1">
               {reparacion.equipo.cliente.nombre} - {reparacion.equipo.descripcion}
             </p>
           </div>
           <Link
             href="/dashboard"
-            className="bg-gray-600 text-white px-5 py-3 rounded-lg hover:bg-gray-700 transition-colors font-medium"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm font-medium"
           >
             ← Volver
           </Link>
         </div>
 
-        {/* Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {/* Equipo Info */}
-          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100">
-            <h2 className="text-lg font-bold text-gray-900 mb-8">Información del Equipo</h2>
-            <div className="space-y-3 text-sm">
-              <div>
-                <p className="text-gray-600">Descripción</p>
-                <p className="font-semibold text-gray-900">{reparacion.equipo.descripcion}</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Número Interno</p>
-                <p className="font-semibold text-gray-900">{reparacion.equipo.numeroInterno}</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Estado</p>
-                <span className="inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                  {reparacion.equipo.estado.replace('_', ' ')}
-                </span>
-              </div>
+        {/* Info Section */}
+        <div className="bg-white border border-gray-300 mb-8">
+          {/* Equipment Info */}
+          <div className="border-b border-gray-300">
+            <div className="bg-gray-100 px-6 py-3 border-b border-gray-300">
+              <h2 className="font-bold text-gray-900 text-sm">INFORMACIÓN DEL EQUIPO</h2>
             </div>
+            <dl className="divide-y divide-gray-200">
+              <div className="grid grid-cols-3 hover:bg-gray-50">
+                <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Descripción</dt>
+                <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">{reparacion.equipo.descripcion}</dd>
+              </div>
+              <div className="grid grid-cols-3 hover:bg-gray-50">
+                <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Número Interno</dt>
+                <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">{reparacion.equipo.numeroInterno}</dd>
+              </div>
+              <div className="grid grid-cols-3 hover:bg-gray-50">
+                <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Estado Equipo</dt>
+                <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">
+                  <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                    {reparacion.equipo.estado.replace('_', ' ')}
+                  </span>
+                </dd>
+              </div>
+            </dl>
           </div>
 
-          {/* Reparacion Info */}
-          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100">
-            <div className="flex justify-between items-start mb-8">
-              <h2 className="text-lg font-bold text-gray-900">Información de Reparación</h2>
+          {/* Repair Info */}
+          <div className="border-b border-gray-300">
+            <div className="bg-gray-100 px-6 py-3 border-b border-gray-300 flex justify-between items-center">
+              <h2 className="font-bold text-gray-900 text-sm">INFORMACIÓN DE REPARACIÓN</h2>
               {!editingBasicInfo && (
                 <button
                   onClick={handleEditBasicInfoClick}
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  className="text-blue-600 hover:text-blue-800 text-xs font-medium"
                 >
                   Editar
                 </button>
               )}
             </div>
             {editingBasicInfo ? (
-              <form onSubmit={updateBasicInfo} className="space-y-4">
+              <form onSubmit={updateBasicInfo} className="px-6 py-4 space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Electricista
-                  </label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Electricista</label>
                   <select
                     value={basicInfoEdits.electricista}
                     onChange={(e) => setBasicInfoEdits({...basicInfoEdits, electricista: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
                   >
                     <option value="">Sin asignar</option>
                     <option value="Arnau">Arnau</option>
@@ -492,46 +494,44 @@ export default function DetallesReparacion() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Número de Precinto
-                  </label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Número de Precinto</label>
                   <input
                     type="text"
                     value={basicInfoEdits.precintoNumero}
                     onChange={(e) => setBasicInfoEdits({...basicInfoEdits, precintoNumero: e.target.value})}
                     placeholder="Ej: PRECINTO-001"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
                   />
                 </div>
-                <div className="flex gap-2 pt-4">
+                <div className="flex gap-2 pt-2">
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                    className="flex-1 bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 text-xs font-medium"
                   >
                     Guardar
                   </button>
                   <button
                     type="button"
                     onClick={() => setEditingBasicInfo(false)}
-                    className="flex-1 bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                    className="flex-1 bg-gray-300 text-gray-900 px-3 py-2 rounded hover:bg-gray-400 text-xs font-medium"
                   >
                     Cancelar
                   </button>
                 </div>
               </form>
             ) : (
-              <div className="space-y-3 text-sm">
-                <div>
-                  <p className="text-gray-600">Electricista</p>
-                  <p className="font-semibold text-gray-900">{reparacion.electricista || 'Sin asignar'}</p>
+              <dl className="divide-y divide-gray-200">
+                <div className="grid grid-cols-3 hover:bg-gray-50">
+                  <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Electricista</dt>
+                  <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">{reparacion.electricista || <span className="italic text-gray-500">Sin asignar</span>}</dd>
                 </div>
-                <div>
-                  <p className="text-gray-600">Precinto</p>
-                  <p className="font-semibold text-gray-900">{reparacion.precintoNumero || 'N/A'}</p>
+                <div className="grid grid-cols-3 hover:bg-gray-50">
+                  <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Precinto</dt>
+                  <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">{reparacion.precintoNumero || 'N/A'}</dd>
                 </div>
-                <div>
-                  <p className="text-gray-600">Estado</p>
-                  <div className="mt-2">
+                <div className="grid grid-cols-3 hover:bg-gray-50">
+                  <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Estado</dt>
+                  <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">
                     <EstadoSelector
                       estadoActual={reparacion.estado}
                       reparacionId={reparacion.id}
@@ -539,302 +539,210 @@ export default function DetallesReparacion() {
                         setReparacion({...reparacion, estado: nuevoEstado})
                       }}
                     />
-                  </div>
+                  </dd>
                 </div>
-              </div>
+              </dl>
             )}
           </div>
-        </div>
 
-        {/* Cliente Info */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100 mb-16">
-          <h2 className="text-lg font-bold text-gray-900 mb-8">Información del Cliente</h2>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <p className="text-gray-600">Nombre</p>
-              <p className="font-semibold text-gray-900">{reparacion.equipo.cliente.nombre}</p>
+          {/* Cliente Info */}
+          <div>
+            <div className="bg-gray-100 px-6 py-3 border-b border-gray-300">
+              <h2 className="font-bold text-gray-900 text-sm">INFORMACIÓN DEL CLIENTE</h2>
             </div>
-            <div>
-              <p className="text-gray-600">Teléfono</p>
-              <p className="font-semibold text-gray-900">{reparacion.equipo.cliente.telefono}</p>
-            </div>
+            <dl className="divide-y divide-gray-200">
+              <div className="grid grid-cols-3 hover:bg-gray-50">
+                <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Nombre</dt>
+                <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">{reparacion.equipo.cliente.nombre}</dd>
+              </div>
+              <div className="grid grid-cols-3 hover:bg-gray-50">
+                <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Teléfono</dt>
+                <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">{reparacion.equipo.cliente.telefono}</dd>
+              </div>
+            </dl>
           </div>
-        </div>
 
-        {/* Tracking Link */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100 mb-16">
-          <h2 className="text-lg font-bold text-gray-900 mb-8">Link de Seguimiento para Cliente</h2>
-          <div className="flex items-center gap-4 p-6 bg-gray-50 rounded-lg border border-gray-200">
-            <input
-              type="text"
-              value={`${typeof window !== 'undefined' ? window.location.origin : ''}/seguimiento/${reparacion.equipo.numeroInterno}`}
-              readOnly
-              className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded text-sm text-gray-900"
-            />
-            <button
-              onClick={() => {
-                const link = `${typeof window !== 'undefined' ? window.location.origin : ''}/seguimiento/${reparacion.equipo.numeroInterno}`
-                navigator.clipboard.writeText(link)
-                alert('Link copiado al portapapeles')
-              }}
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium whitespace-nowrap"
-            >
-              Copiar Link
-            </button>
+          {/* Tracking Link */}
+          <div>
+            <div className="bg-gray-100 px-6 py-3 border-b border-gray-300">
+              <h2 className="font-bold text-gray-900 text-sm">LINK DE SEGUIMIENTO</h2>
+            </div>
+            <div className="px-6 py-4">
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={`${typeof window !== 'undefined' ? window.location.origin : ''}/seguimiento/${reparacion.equipo.numeroInterno}`}
+                  readOnly
+                  className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded text-sm text-gray-900 font-mono"
+                />
+                <button
+                  onClick={() => {
+                    const link = `${typeof window !== 'undefined' ? window.location.origin : ''}/seguimiento/${reparacion.equipo.numeroInterno}`
+                    navigator.clipboard.writeText(link)
+                    alert('Link copiado al portapapeles')
+                  }}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs font-medium whitespace-nowrap"
+                >
+                  Copiar Link
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Repuestos Section */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100 mb-16">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-lg font-bold text-gray-900">Repuestos Utilizados</h2>
+        <div className="bg-white border border-gray-300 mb-8">
+          <div className="bg-gray-100 px-6 py-3 border-b border-gray-300 flex justify-between items-center">
+            <h2 className="font-bold text-gray-900 text-sm">REPUESTOS UTILIZADOS</h2>
             <button
               onClick={() => setShowFormRepuesto(!showFormRepuesto)}
-              className="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
+              className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 text-xs font-medium"
             >
-              {showFormRepuesto ? 'Cancelar' : '+ Agregar Repuesto'}
+              {showFormRepuesto ? 'Cancelar' : '+ Agregar'}
             </button>
           </div>
 
           {showFormRepuesto && (
-            <form onSubmit={addRepuesto} className="mb-8 p-8 bg-gray-50 rounded-lg border border-gray-200 space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Código Repuesto *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={repuesto.codigoRepuesto}
-                    onChange={(e) => setRepuesto({...repuesto, codigoRepuesto: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Descripción
-                  </label>
-                  <input
-                    type="text"
-                    value={repuesto.descripcion}
-                    onChange={(e) => setRepuesto({...repuesto, descripcion: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Cantidad *
-                  </label>
-                  <input
-                    type="number"
-                    required
-                    value={repuesto.cantidad}
-                    onChange={(e) => setRepuesto({...repuesto, cantidad: parseInt(e.target.value) || 1})}
-                    min="1"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Precio Unitario *
-                  </label>
-                  <input
-                    type="number"
-                    required
-                    value={repuesto.importeUnitario}
-                    onChange={(e) => setRepuesto({...repuesto, importeUnitario: parseFloat(e.target.value) || 0})}
-                    min="0"
-                    step="0.01"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
+            <form onSubmit={addRepuesto} className="p-6 bg-gray-50 border-b border-gray-300 grid grid-cols-4 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Código *</label>
+                <input type="text" required value={repuesto.codigoRepuesto} onChange={(e) => setRepuesto({...repuesto, codigoRepuesto: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded text-sm" />
               </div>
               <div>
-                <button
-                  type="submit"
-                  className="w-full bg-green-600 text-white px-4 py-4 rounded-lg hover:bg-green-700 font-medium transition-colors"
-                >
-                  Agregar Repuesto
-                </button>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Descripción</label>
+                <input type="text" value={repuesto.descripcion} onChange={(e) => setRepuesto({...repuesto, descripcion: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded text-sm" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Cantidad *</label>
+                <input type="number" required value={repuesto.cantidad} onChange={(e) => setRepuesto({...repuesto, cantidad: parseInt(e.target.value) || 1})} min="1" className="w-full px-3 py-2 border border-gray-300 rounded text-sm" />
+              </div>
+              <div className="flex flex-col">
+                <label className="block text-xs font-medium text-gray-700 mb-1">Precio Unit. *</label>
+                <div className="flex gap-2">
+                  <input type="number" required value={repuesto.importeUnitario} onChange={(e) => setRepuesto({...repuesto, importeUnitario: parseFloat(e.target.value) || 0})} min="0" step="0.01" className="flex-1 px-3 py-2 border border-gray-300 rounded text-sm" />
+                  <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-xs font-medium">Agregar</button>
+                </div>
               </div>
             </form>
           )}
 
           {reparacion.repuestosUsados.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-200 bg-gray-50">
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">Código</th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">Descripción</th>
-                    <th className="px-6 py-4 text-center text-xs font-bold text-gray-900 uppercase tracking-wide">Cantidad</th>
-                    <th className="px-6 py-4 text-right text-xs font-bold text-gray-900 uppercase tracking-wide">Precio Unit.</th>
-                    <th className="px-6 py-4 text-right text-xs font-bold text-gray-900 uppercase tracking-wide">Subtotal</th>
-                    <th className="px-6 py-4 text-center text-xs font-bold text-gray-900 uppercase tracking-wide">Acciones</th>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-300 bg-gray-100">
+                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Código</th>
+                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Descripción</th>
+                  <th className="px-6 py-3 text-center text-xs font-bold text-gray-900">Cant</th>
+                  <th className="px-6 py-3 text-right text-xs font-bold text-gray-900">Precio Unit.</th>
+                  <th className="px-6 py-3 text-right text-xs font-bold text-gray-900">Subtotal</th>
+                  <th className="px-6 py-3 text-center text-xs font-bold text-gray-900">Acciones</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {reparacion.repuestosUsados.map(rep => (
+                  <tr key={rep.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-3 text-sm">{rep.codigoRepuesto}</td>
+                    <td className="px-6 py-3 text-sm">{rep.descripcion || '-'}</td>
+                    <td className="px-6 py-3 text-center text-sm">{rep.cantidad}</td>
+                    <td className="px-6 py-3 text-right text-sm">${rep.importeUnitario.toFixed(2)}</td>
+                    <td className="px-6 py-3 text-right text-sm font-medium">${rep.subtotal.toFixed(2)}</td>
+                    <td className="px-6 py-3 text-center space-x-2">
+                      <button onClick={() => setEditingRepuesto({id: rep.id, codigoRepuesto: rep.codigoRepuesto, descripcion: rep.descripcion, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})} className="text-blue-600 hover:text-blue-800 text-xs font-medium">Editar</button>
+                      <button onClick={() => deleteRepuesto(rep.id)} className="text-red-600 hover:text-red-800 text-xs font-medium">Eliminar</button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {reparacion.repuestosUsados.map(rep => (
-                    <tr key={rep.id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150">
-                      <td className="px-6 py-4 text-sm">{rep.codigoRepuesto}</td>
-                      <td className="px-6 py-4 text-sm">{rep.descripcion || '-'}</td>
-                      <td className="px-6 py-4 text-center text-sm">{rep.cantidad}</td>
-                      <td className="px-6 py-4 text-right text-sm">${rep.importeUnitario.toFixed(2)}</td>
-                      <td className="px-6 py-4 text-right text-sm font-semibold">${rep.subtotal.toFixed(2)}</td>
-                      <td className="px-6 py-4 text-center space-x-2">
-                        <>
-                          <button
-                            onClick={() => setEditingRepuesto({id: rep.id, codigoRepuesto: rep.codigoRepuesto, descripcion: rep.descripcion, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})}
-                            className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                          >
-                            Editar
-                          </button>
-                          <button
-                            onClick={() => deleteRepuesto(rep.id)}
-                            className="text-red-600 hover:text-red-800 text-xs font-medium"
-                          >
-                            Eliminar
-                          </button>
-                        </>
-                      </td>
-                    </tr>
-                  ))}
-                  <tr className="font-semibold bg-gray-50 border-t border-gray-200">
-                    <td colSpan={5} className="px-6 py-4 text-right text-sm font-bold">Total Repuestos:</td>
-                    <td className="px-6 py-4 text-right text-sm font-bold">${totalRepuestos.toFixed(2)}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                ))}
+                <tr className="font-semibold bg-gray-100 border-t border-gray-300">
+                  <td colSpan={4} className="px-6 py-3 text-right text-sm">Total:</td>
+                  <td className="px-6 py-3 text-right text-sm font-bold">${totalRepuestos.toFixed(2)}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
           ) : (
-            <p className="text-gray-600 text-sm">No hay repuestos registrados</p>
+            <div className="px-6 py-4 text-sm text-gray-600">No hay repuestos registrados</div>
           )}
         </div>
 
         {/* Valorizacion Section */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-lg font-bold text-gray-900">Valorización</h2>
+        <div className="bg-white border border-gray-300">
+          <div className="bg-gray-100 px-6 py-3 border-b border-gray-300 flex justify-between items-center">
+            <h2 className="font-bold text-gray-900 text-sm">VALORIZACIÓN</h2>
             {!reparacion.valorizacion && (
-              <button
-                onClick={() => setShowFormValorizacion(!showFormValorizacion)}
-                className="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
-              >
-                {showFormValorizacion ? 'Cancelar' : '+ Crear Valorización'}
+              <button onClick={() => setShowFormValorizacion(!showFormValorizacion)} className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 text-xs font-medium">
+                {showFormValorizacion ? 'Cancelar' : '+ Crear'}
               </button>
             )}
           </div>
 
           {showFormValorizacion && (
-            <form onSubmit={createValorizacion} className="p-8 bg-gray-50 rounded-lg border border-gray-200 space-y-6">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Electricista *
-                  </label>
-                  <select
-                    value={valorizacion.manoObraElectricista}
-                    onChange={(e) => setValorizacion({...valorizacion, manoObraElectricista: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="Arnau">Arnau</option>
-                    <option value="Ivan">Ivan</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Importe Mano de Obra *
-                  </label>
-                  <input
-                    type="number"
-                    required
-                    value={valorizacion.importeManoObra}
-                    onChange={(e) => setValorizacion({...valorizacion, importeManoObra: parseFloat(e.target.value) || 0})}
-                    min="0"
-                    step="0.01"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Número de Factura Interna
-                  </label>
-                  <input
-                    type="text"
-                    value={valorizacion.numeroFacturaInterna}
-                    onChange={(e) => setValorizacion({...valorizacion, numeroFacturaInterna: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
+            <form onSubmit={createValorizacion} className="p-6 bg-gray-50 border-b border-gray-300 grid grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Electricista *</label>
+                <select value={valorizacion.manoObraElectricista} onChange={(e) => setValorizacion({...valorizacion, manoObraElectricista: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded text-sm">
+                  <option value="Arnau">Arnau</option>
+                  <option value="Ivan">Ivan</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Importe Mano de Obra *</label>
+                <input type="number" required value={valorizacion.importeManoObra} onChange={(e) => setValorizacion({...valorizacion, importeManoObra: parseFloat(e.target.value) || 0})} min="0" step="0.01" className="w-full px-3 py-2 border border-gray-300 rounded text-sm" />
+              </div>
+              <div className="flex flex-col">
+                <label className="block text-xs font-medium text-gray-700 mb-1">Nº Factura</label>
+                <div className="flex gap-2">
+                  <input type="text" value={valorizacion.numeroFacturaInterna} onChange={(e) => setValorizacion({...valorizacion, numeroFacturaInterna: e.target.value})} className="flex-1 px-3 py-2 border border-gray-300 rounded text-sm" />
+                  <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-xs font-medium">Crear</button>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="w-full bg-green-600 text-white px-4 py-4 rounded-lg hover:bg-green-700 font-medium transition-colors"
-              >
-                Crear Valorización
-              </button>
             </form>
           )}
 
           {reparacion.valorizacion ? (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-gray-600 text-sm">Costo Repuestos</p>
-                  <p className="text-2xl font-bold text-gray-900">${reparacion.valorizacion.costoRepuestos.toFixed(2)}</p>
+            <div className="divide-y divide-gray-200">
+              <dl className="divide-y divide-gray-200">
+                <div className="grid grid-cols-3 hover:bg-gray-50">
+                  <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Costo Repuestos</dt>
+                  <dd className="px-6 py-3 text-sm font-bold text-gray-900 col-span-2">${reparacion.valorizacion.costoRepuestos.toFixed(2)}</dd>
                 </div>
-                <div>
-                  <p className="text-gray-600 text-sm">Mano de Obra ({reparacion.valorizacion.manoObraElectricista})</p>
-                  <p className="text-2xl font-bold text-gray-900">${reparacion.valorizacion.importeManoObra.toFixed(2)}</p>
+                <div className="grid grid-cols-3 hover:bg-gray-50">
+                  <dt className="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-50">Mano de Obra</dt>
+                  <dd className="px-6 py-3 text-sm text-gray-900 col-span-2">{reparacion.valorizacion.manoObraElectricista} - ${reparacion.valorizacion.importeManoObra.toFixed(2)}</dd>
                 </div>
-              </div>
-              <div className="border-t pt-4">
-                <p className="text-gray-600 text-sm mb-1">Total</p>
-                <p className="text-3xl font-bold text-gray-900">${reparacion.valorizacion.subtotal.toFixed(2)}</p>
-              </div>
+                <div className="grid grid-cols-3 bg-blue-50">
+                  <dt className="px-6 py-3 text-sm font-bold text-gray-900 bg-gray-50">Subtotal</dt>
+                  <dd className="px-6 py-3 text-sm font-bold text-blue-900 col-span-2">${reparacion.valorizacion.subtotal.toFixed(2)}</dd>
+                </div>
+              </dl>
 
               {reparacion.valorizacion.cotizacion ? (
-                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                  <div className="mb-4">
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <p className="text-gray-600 text-xs">Importe Original</p>
-                        <p className="font-semibold text-gray-900">${reparacion.valorizacion.cotizacion.importeOriginal.toFixed(2)}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600 text-xs">Ajuste Pablo</p>
-                        <p className="font-semibold text-gray-900">${reparacion.valorizacion.cotizacion.ajustePablo.toFixed(2)}</p>
-                      </div>
+                <div className="border-t border-gray-300 pt-4">
+                  <dl className="divide-y divide-gray-200">
+                    <div className="grid grid-cols-3 px-6 py-3 hover:bg-gray-50">
+                      <dt className="text-sm font-medium text-gray-700">Importe Original</dt>
+                      <dd className="text-sm font-medium text-gray-900 col-span-2">${reparacion.valorizacion.cotizacion.importeOriginal.toFixed(2)}</dd>
                     </div>
-                    <div className="border-t pt-4">
-                      <p className="text-gray-600 text-xs mb-1">Importe Final</p>
-                      <p className="text-2xl font-bold text-gray-900">${reparacion.valorizacion.cotizacion.importeFinal.toFixed(2)}</p>
+                    <div className="grid grid-cols-3 px-6 py-3 hover:bg-gray-50">
+                      <dt className="text-sm font-medium text-gray-700">Ajuste Pablo</dt>
+                      <dd className="text-sm font-medium text-gray-900 col-span-2">${reparacion.valorizacion.cotizacion.ajustePablo.toFixed(2)}</dd>
                     </div>
+                    <div className="grid grid-cols-3 px-6 py-3 bg-green-50 border-t border-gray-300">
+                      <dt className="text-sm font-bold text-gray-900">Importe Final</dt>
+                      <dd className="text-sm font-bold text-green-900 col-span-2">${reparacion.valorizacion.cotizacion.importeFinal.toFixed(2)}</dd>
+                    </div>
+                  </dl>
+                  <div className="px-6 py-4">
+                    <button onClick={() => {setEditingCotizacion(true); setCotizacionAjuste(reparacion.valorizacion.cotizacion.ajustePablo)}} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-xs font-medium">Editar Cotización</button>
                   </div>
-                  <button
-                    onClick={() => {
-                      setEditingCotizacion(true)
-                      setCotizacionAjuste(reparacion.valorizacion.cotizacion.ajustePablo)
-                    }}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
-                  >
-                    Editar Cotización
-                  </button>
                 </div>
               ) : (
-                <Link
-                  href={`/cotizaciones/nueva?valorizacionId=${reparacion.valorizacion.id}`}
-                  className="block w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-center text-sm mt-4"
-                >
-                  Crear Cotización
-                </Link>
+                <div className="px-6 py-4">
+                  <Link href={`/cotizaciones/nueva?valorizacionId=${reparacion.valorizacion.id}`} className="block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-center text-xs font-medium">Crear Cotización</Link>
+                </div>
               )}
             </div>
           ) : (
-            <p className="text-gray-600 text-sm">Cree una valorización para continuar</p>
+            <div className="px-6 py-4 text-sm text-gray-600">Cree una valorización para continuar</div>
           )}
         </div>
       </div>
