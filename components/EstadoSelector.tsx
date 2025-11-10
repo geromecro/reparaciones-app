@@ -71,7 +71,7 @@ export default function EstadoSelector({
       <button
         onClick={() => !loading && setIsOpen(!isOpen)}
         disabled={loading}
-        className={`inline-flex items-center px-6 py-3 text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+        className={`inline-flex items-center px-8 py-4 text-base font-semibold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md ${
           estadoActualInfo ? variantStyles[estadoActualInfo.variant as keyof typeof variantStyles] : 'bg-blue-100 text-blue-900 border border-blue-200'
         }`}
       >
@@ -80,25 +80,25 @@ export default function EstadoSelector({
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-3 w-80 bg-white border border-gray-300 z-50">
+        <div className="absolute top-full left-0 mt-4 w-96 bg-white border border-gray-300 rounded-xl shadow-lg z-50">
           <div className="max-h-96 overflow-y-auto">
             {ESTADOS.map(estado => (
               <button
                 key={estado.value}
                 onClick={() => handleEstadoChange(estado.value)}
                 disabled={loading}
-                className={`w-full text-left px-6 py-4 border-b border-gray-300 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed ${
-                  estadoActual === estado.value ? 'bg-blue-50 font-semibold' : ''
+                className={`w-full text-left px-8 py-5 border-b border-gray-200 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  estadoActual === estado.value ? 'bg-blue-50' : ''
                 }`}
               >
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <span className={`inline-flex items-center px-4 py-2 text-xs font-semibold ${variantStyles[estado.variant as keyof typeof variantStyles]}`}>
+                    <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold ${variantStyles[estado.variant as keyof typeof variantStyles]}`}>
                       {estado.label}
                     </span>
                   </div>
                   {estadoActual === estado.value && (
-                    <svg className="w-6 h-6 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-7 h-7 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   )}

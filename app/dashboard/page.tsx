@@ -105,32 +105,32 @@ export default function Dashboard() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="max-w-full mx-auto px-6 py-6">
+      <div className="max-w-7xl mx-auto px-8 py-16">
         {/* Header */}
-        <div className="mb-6 flex justify-between items-center border-b border-gray-300 pb-4">
+        <div className="mb-20 flex justify-between items-start">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              Dashboard
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+              Panel de Control
             </h1>
-            <p className="text-xs text-gray-600 mt-1">
-              {reparaciones.length} total | En Inicio: {reparaciones.filter(r => ['RECIBIDO', 'PRECINTADO', 'ASIGNADO'].includes(r.estado)).length} | En Trabajo: {reparaciones.filter(r => ['DIAGNOSTICO', 'EN_REPARACION', 'ESPERANDO_REPUESTOS'].includes(r.estado)).length}
+            <p className="text-lg text-gray-600">
+              {reparaciones.length} reparaciones en total
             </p>
           </div>
           <Link href="/">
-            <Button variant="secondary" className="text-xs">
+            <Button variant="secondary" className="text-sm px-6 py-3">
               ← Inicio
             </Button>
           </Link>
         </div>
 
-        {/* Stats Grid - Compact */}
-        <div className="grid grid-cols-4 gap-4 mb-8 bg-white border border-gray-300">
+        {/* Stats Grid - Minimalista */}
+        <div className="grid grid-cols-4 gap-6 mb-20">
           {statCards.map((stat, idx) => (
-            <div key={idx} className="border-r border-gray-300 px-6 py-4 last:border-r-0">
-              <p className="text-xs font-medium text-gray-600 uppercase">
+            <div key={idx} className="bg-white rounded-xl shadow-sm p-10 hover:shadow-md transition-shadow">
+              <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-4">
                 {stat.label}
               </p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">
+              <p className="text-6xl font-bold text-gray-900">
                 {stat.count}
               </p>
             </div>
@@ -138,16 +138,16 @@ export default function Dashboard() {
         </div>
 
         {/* Table */}
-        <div className="bg-white border border-gray-300 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           {loading ? (
-            <div className="p-16 text-center">
-              <p className="text-gray-600">Cargando reparaciones...</p>
+            <div className="p-20 text-center">
+              <p className="text-lg text-gray-600">Cargando reparaciones...</p>
             </div>
           ) : reparaciones.length === 0 ? (
-            <div className="p-16 text-center">
-              <p className="text-gray-600 mb-6">No hay reparaciones registradas</p>
+            <div className="p-20 text-center">
+              <p className="text-lg text-gray-600 mb-8">No hay reparaciones registradas</p>
               <Link href="/reparaciones/nueva">
-                <Button variant="primary">
+                <Button variant="primary" className="px-8 py-4 text-base">
                   Crear Nueva Reparación
                 </Button>
               </Link>
@@ -156,31 +156,31 @@ export default function Dashboard() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-300 bg-gray-100">
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">ID</th>
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Cliente</th>
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Equipo</th>
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Electricista</th>
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Estado</th>
-                    <th className="px-6 py-3 text-xs font-bold text-gray-900 text-center">Acción</th>
+                  <tr className="border-b border-gray-200 bg-gray-50">
+                    <th className="px-8 py-5 text-left text-sm font-semibold text-gray-700">ID</th>
+                    <th className="px-8 py-5 text-left text-sm font-semibold text-gray-700">Cliente</th>
+                    <th className="px-8 py-5 text-left text-sm font-semibold text-gray-700">Equipo</th>
+                    <th className="px-8 py-5 text-left text-sm font-semibold text-gray-700">Electricista</th>
+                    <th className="px-8 py-5 text-left text-sm font-semibold text-gray-700">Estado</th>
+                    <th className="px-8 py-5 text-sm font-semibold text-gray-700 text-center">Acción</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-100">
                   {reparaciones.map((rep) => (
-                    <tr key={rep.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-3 text-sm text-gray-900 font-medium">#{rep.id}</td>
-                      <td className="px-6 py-3 text-sm text-gray-900">{rep.equipo.cliente.nombre}</td>
-                      <td className="px-6 py-3 text-sm text-gray-700">{rep.equipo.descripcion}</td>
-                      <td className="px-6 py-3 text-sm text-gray-700">{rep.electricista || <span className="italic text-gray-500">-</span>}</td>
-                      <td className="px-6 py-3">
-                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-900 border border-blue-200">
+                    <tr key={rep.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-8 py-6 text-base text-gray-900 font-semibold">#{rep.id}</td>
+                      <td className="px-8 py-6 text-base text-gray-900">{rep.equipo.cliente.nombre}</td>
+                      <td className="px-8 py-6 text-base text-gray-700">{rep.equipo.descripcion}</td>
+                      <td className="px-8 py-6 text-base text-gray-700">{rep.electricista || <span className="italic text-gray-400">-</span>}</td>
+                      <td className="px-8 py-6">
+                        <span className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-blue-100 text-blue-900">
                           {getEstadoLabel(rep.estado)}
                         </span>
-                        {!rep.electricista && <span className="ml-2 inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-amber-100 text-amber-900">Inc.</span>}
+                        {!rep.electricista && <span className="ml-2 inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-amber-100 text-amber-900">Sin asignar</span>}
                       </td>
-                      <td className="px-6 py-3 text-sm text-center">
-                        <Link href={`/reparaciones/${rep.id}`} className="text-blue-600 hover:text-blue-800 font-medium">
-                          Ver
+                      <td className="px-8 py-6 text-base text-center">
+                        <Link href={`/reparaciones/${rep.id}`} className="text-blue-600 hover:text-blue-800 font-semibold transition-colors">
+                          Ver detalles
                         </Link>
                       </td>
                     </tr>

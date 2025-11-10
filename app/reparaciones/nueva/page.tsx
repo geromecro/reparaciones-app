@@ -136,31 +136,31 @@ export default function NuevaReparacion() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-2xl mx-auto p-16">
         {/* Header */}
-        <div className="mb-8 border-b border-gray-300 pb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="mb-16">
+          <h1 className="text-5xl font-bold text-gray-900 mb-3">
             Nueva Reparación
           </h1>
-          <p className="text-sm text-gray-600">
+          <p className="text-lg text-gray-600">
             Paso {step} de 3
           </p>
         </div>
 
         {/* Progress Bar */}
-        <div className="mb-12 bg-white border border-gray-300 p-8">
+        <div className="mb-16 bg-white rounded-xl shadow-sm p-12">
           <div className="flex justify-between items-center gap-8">
             {[1, 2, 3].map(s => (
               <div key={s} className="flex flex-col items-center flex-1">
-                <div className={`w-12 h-12 rounded flex items-center justify-center font-bold text-sm transition-all duration-200 ${
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-200 ${
                   s <= step
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-blue-600 text-white shadow-md'
                     : 'bg-gray-200 text-gray-600'
                 }`}>
                   {s}
                 </div>
-                <p className="text-xs font-medium text-gray-700 mt-3 text-center">
+                <p className="text-sm font-medium text-gray-700 mt-4 text-center">
                   {s === 1 && 'Cliente'}
                   {s === 2 && 'Equipo'}
                   {s === 3 && 'Reparación'}
@@ -171,7 +171,7 @@ export default function NuevaReparacion() {
         </div>
 
         {/* Forms */}
-        <div className="bg-white border border-gray-300 p-10">
+        <div className="bg-white rounded-xl shadow-sm p-12">
           {step === 1 && (
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-8">
