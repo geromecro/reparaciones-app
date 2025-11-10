@@ -156,57 +156,30 @@ export default function Dashboard() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 bg-gray-50">
-                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
-                      ID
-                    </th>
-                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
-                      Cliente
-                    </th>
-                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
-                      Equipo
-                    </th>
-                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
-                      Electricista
-                    </th>
-                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
-                      Estado
-                    </th>
-                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
-                      Acción
-                    </th>
+                  <tr className="border-b border-gray-300 bg-gray-100">
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Cliente</th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Equipo</th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Electricista</th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-900">Estado</th>
+                    <th className="px-6 py-3 text-xs font-bold text-gray-900 text-center">Acción</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {reparaciones.map((rep) => (
-                    <tr key={rep.id} className="hover:bg-gray-50 transition-colors duration-150">
-                      <td className="px-10 py-6 text-sm text-gray-900 font-medium">
-                        #{rep.id}
-                      </td>
-                      <td className="px-10 py-6 text-sm text-gray-900">
-                        {rep.equipo.cliente.nombre}
-                      </td>
-                      <td className="px-10 py-6 text-sm text-gray-700">
-                        {rep.equipo.descripcion}
-                      </td>
-                      <td className="px-10 py-6 text-sm text-gray-700">
-                        {rep.electricista || <span className="italic text-gray-500">Sin asignar</span>}
-                      </td>
-                      <td className="px-10 py-6 flex items-center gap-2">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-900 border border-blue-200">
+                    <tr key={rep.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-3 text-sm text-gray-900 font-medium">#{rep.id}</td>
+                      <td className="px-6 py-3 text-sm text-gray-900">{rep.equipo.cliente.nombre}</td>
+                      <td className="px-6 py-3 text-sm text-gray-700">{rep.equipo.descripcion}</td>
+                      <td className="px-6 py-3 text-sm text-gray-700">{rep.electricista || <span className="italic text-gray-500">-</span>}</td>
+                      <td className="px-6 py-3">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-900 border border-blue-200">
                           {getEstadoLabel(rep.estado)}
                         </span>
-                        {!rep.electricista && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-900 border border-amber-200">
-                            Incompleta
-                          </span>
-                        )}
+                        {!rep.electricista && <span className="ml-2 inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-amber-100 text-amber-900">Inc.</span>}
                       </td>
-                      <td className="px-8 py-5 text-sm">
-                        <Link
-                          href={`/reparaciones/${rep.id}`}
-                          className="text-blue-700 hover:text-blue-900 font-medium transition-colors"
-                        >
+                      <td className="px-6 py-3 text-sm text-center">
+                        <Link href={`/reparaciones/${rep.id}`} className="text-blue-600 hover:text-blue-800 font-medium">
                           Ver
                         </Link>
                       </td>
