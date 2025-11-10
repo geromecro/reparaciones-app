@@ -420,11 +420,11 @@ export default function DetallesReparacion() {
         </form>
       </Modal>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
-        <div className="mb-12 flex justify-between items-start">
+        <div className="mb-16 flex justify-between items-start">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">
               Reparación #{reparacion.id}
             </h1>
             <p className="text-base text-gray-600">
@@ -433,17 +433,17 @@ export default function DetallesReparacion() {
           </div>
           <Link
             href="/dashboard"
-            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+            className="bg-gray-600 text-white px-5 py-3 rounded-lg hover:bg-gray-700 transition-colors font-medium"
           >
             ← Volver
           </Link>
         </div>
 
         {/* Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {/* Equipo Info */}
-          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8">
-            <h2 className="text-lg font-bold text-gray-900 mb-6">Información del Equipo</h2>
+          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100">
+            <h2 className="text-lg font-bold text-gray-900 mb-8">Información del Equipo</h2>
             <div className="space-y-3 text-sm">
               <div>
                 <p className="text-gray-600">Descripción</p>
@@ -463,8 +463,8 @@ export default function DetallesReparacion() {
           </div>
 
           {/* Reparacion Info */}
-          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8">
-            <div className="flex justify-between items-start mb-6">
+          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100">
+            <div className="flex justify-between items-start mb-8">
               <h2 className="text-lg font-bold text-gray-900">Información de Reparación</h2>
               {!editingBasicInfo && (
                 <button
@@ -547,8 +547,8 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Cliente Info */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8 mb-12">
-          <h2 className="text-lg font-bold text-gray-900 mb-6">Información del Cliente</h2>
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100 mb-16">
+          <h2 className="text-lg font-bold text-gray-900 mb-8">Información del Cliente</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-gray-600">Nombre</p>
@@ -562,9 +562,9 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Tracking Link */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8 mb-12">
-          <h2 className="text-lg font-bold text-gray-900 mb-6">Link de Seguimiento para Cliente</h2>
-          <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100 mb-16">
+          <h2 className="text-lg font-bold text-gray-900 mb-8">Link de Seguimiento para Cliente</h2>
+          <div className="flex items-center gap-4 p-6 bg-gray-50 rounded-lg border border-gray-200">
             <input
               type="text"
               value={`${typeof window !== 'undefined' ? window.location.origin : ''}/seguimiento/${reparacion.equipo.numeroInterno}`}
@@ -585,22 +585,22 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Repuestos Section */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8 mb-12">
-          <div className="flex justify-between items-center mb-6">
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100 mb-16">
+          <div className="flex justify-between items-center mb-8">
             <h2 className="text-lg font-bold text-gray-900">Repuestos Utilizados</h2>
             <button
               onClick={() => setShowFormRepuesto(!showFormRepuesto)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
+              className="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
             >
               {showFormRepuesto ? 'Cancelar' : '+ Agregar Repuesto'}
             </button>
           </div>
 
           {showFormRepuesto && (
-            <form onSubmit={addRepuesto} className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <div className="grid grid-cols-2 gap-4 mb-4">
+            <form onSubmit={addRepuesto} className="mb-8 p-8 bg-gray-50 rounded-lg border border-gray-200 space-y-6">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Código Repuesto *
                   </label>
                   <input
@@ -608,24 +608,24 @@ export default function DetallesReparacion() {
                     required
                     value={repuesto.codigoRepuesto}
                     onChange={(e) => setRepuesto({...repuesto, codigoRepuesto: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Descripción
                   </label>
                   <input
                     type="text"
                     value={repuesto.descripcion}
                     onChange={(e) => setRepuesto({...repuesto, descripcion: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Cantidad *
                   </label>
                   <input
@@ -634,11 +634,11 @@ export default function DetallesReparacion() {
                     value={repuesto.cantidad}
                     onChange={(e) => setRepuesto({...repuesto, cantidad: parseInt(e.target.value) || 1})}
                     min="1"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Precio Unitario *
                   </label>
                   <input
@@ -648,14 +648,14 @@ export default function DetallesReparacion() {
                     onChange={(e) => setRepuesto({...repuesto, importeUnitario: parseFloat(e.target.value) || 0})}
                     min="0"
                     step="0.01"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
-              <div className="mt-4">
+              <div>
                 <button
                   type="submit"
-                  className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                  className="w-full bg-green-600 text-white px-4 py-4 rounded-lg hover:bg-green-700 font-medium transition-colors"
                 >
                   Agregar Repuesto
                 </button>
@@ -715,13 +715,13 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Valorizacion Section */}
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-8">
-          <div className="flex justify-between items-center mb-6">
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-10 border border-gray-100">
+          <div className="flex justify-between items-center mb-8">
             <h2 className="text-lg font-bold text-gray-900">Valorización</h2>
             {!reparacion.valorizacion && (
               <button
                 onClick={() => setShowFormValorizacion(!showFormValorizacion)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
+                className="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
               >
                 {showFormValorizacion ? 'Cancelar' : '+ Crear Valorización'}
               </button>
@@ -729,23 +729,23 @@ export default function DetallesReparacion() {
           </div>
 
           {showFormValorizacion && (
-            <form onSubmit={createValorizacion} className="p-4 bg-gray-50 rounded-lg">
-              <div className="space-y-4 mb-4">
+            <form onSubmit={createValorizacion} className="p-8 bg-gray-50 rounded-lg border border-gray-200 space-y-6">
+              <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Electricista *
                   </label>
                   <select
                     value={valorizacion.manoObraElectricista}
                     onChange={(e) => setValorizacion({...valorizacion, manoObraElectricista: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="Arnau">Arnau</option>
                     <option value="Ivan">Ivan</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Importe Mano de Obra *
                   </label>
                   <input
@@ -755,24 +755,24 @@ export default function DetallesReparacion() {
                     onChange={(e) => setValorizacion({...valorizacion, importeManoObra: parseFloat(e.target.value) || 0})}
                     min="0"
                     step="0.01"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Número de Factura Interna
                   </label>
                   <input
                     type="text"
                     value={valorizacion.numeroFacturaInterna}
                     onChange={(e) => setValorizacion({...valorizacion, numeroFacturaInterna: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
               <button
                 type="submit"
-                className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                className="w-full bg-green-600 text-white px-4 py-4 rounded-lg hover:bg-green-700 font-medium transition-colors"
               >
                 Crear Valorización
               </button>

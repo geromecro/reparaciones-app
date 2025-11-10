@@ -104,15 +104,15 @@ export default function Dashboard() {
   ]
 
   return (
-    <main className="min-h-screen bg-primary-50">
-      <div className="max-w-7xl mx-auto px-6 py-8">
+    <main className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-8 py-12">
         {/* Header */}
-        <div className="mb-12 flex justify-between items-start">
+        <div className="mb-20 flex justify-between items-start">
           <div>
-            <h1 className="text-4xl font-bold text-primary-900 mb-2">
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">
               Dashboard
             </h1>
-            <p className="text-base text-primary-600">
+            <p className="text-base text-gray-600">
               {reparaciones.length} reparaciones registradas
             </p>
           </div>
@@ -124,10 +124,10 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {statCards.map((stat, idx) => (
-            <div key={idx} className="bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-lg transition-all duration-200 p-8">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+            <div key={idx} className="bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-lg transition-all duration-200 p-10">
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-4">
                 {stat.label}
               </p>
               <p className="text-5xl font-bold text-gray-900">
@@ -140,12 +140,12 @@ export default function Dashboard() {
         {/* Table */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
           {loading ? (
-            <div className="p-12 text-center">
+            <div className="p-16 text-center">
               <p className="text-gray-600">Cargando reparaciones...</p>
             </div>
           ) : reparaciones.length === 0 ? (
-            <div className="p-12 text-center">
-              <p className="text-gray-600 mb-4">No hay reparaciones registradas</p>
+            <div className="p-16 text-center">
+              <p className="text-gray-600 mb-6">No hay reparaciones registradas</p>
               <Link href="/reparaciones/nueva">
                 <Button variant="primary">
                   Crear Nueva Reparación
@@ -157,22 +157,22 @@ export default function Dashboard() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200 bg-gray-50">
-                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
+                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       ID
                     </th>
-                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
+                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Cliente
                     </th>
-                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
+                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Equipo
                     </th>
-                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
+                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Electricista
                     </th>
-                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
+                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Estado
                     </th>
-                    <th className="px-8 py-5 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
+                    <th className="px-10 py-6 text-left text-xs font-bold text-gray-900 uppercase tracking-wide">
                       Acción
                     </th>
                   </tr>
@@ -180,19 +180,19 @@ export default function Dashboard() {
                 <tbody className="divide-y divide-gray-200">
                   {reparaciones.map((rep) => (
                     <tr key={rep.id} className="hover:bg-gray-50 transition-colors duration-150">
-                      <td className="px-8 py-5 text-sm text-gray-900 font-medium">
+                      <td className="px-10 py-6 text-sm text-gray-900 font-medium">
                         #{rep.id}
                       </td>
-                      <td className="px-8 py-5 text-sm text-gray-900">
+                      <td className="px-10 py-6 text-sm text-gray-900">
                         {rep.equipo.cliente.nombre}
                       </td>
-                      <td className="px-8 py-5 text-sm text-gray-700">
+                      <td className="px-10 py-6 text-sm text-gray-700">
                         {rep.equipo.descripcion}
                       </td>
-                      <td className="px-8 py-5 text-sm text-gray-700">
+                      <td className="px-10 py-6 text-sm text-gray-700">
                         {rep.electricista || <span className="italic text-gray-500">Sin asignar</span>}
                       </td>
-                      <td className="px-8 py-5 flex items-center gap-2">
+                      <td className="px-10 py-6 flex items-center gap-2">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-900 border border-blue-200">
                           {getEstadoLabel(rep.estado)}
                         </span>
