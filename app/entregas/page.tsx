@@ -27,6 +27,7 @@ export default function EntregasPage() {
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [selectedEquipoId, setSelectedEquipoId] = useState<number | null>(null)
+  const [activeTab, setActiveTab] = useState<'pendientes' | 'entregadas'>('pendientes')
   const [remitos, setRemitos] = useState({
     numeroRemitoOficial: '',
     numeroRemitoInterno: ''
@@ -114,15 +115,30 @@ export default function EntregasPage() {
 
         {/* Tabs */}
         <div className="mb-8 flex gap-4 border-b">
-          <button className="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-medium">
+          <button
+            onClick={() => setActiveTab('pendientes')}
+            className={`px-4 py-2 border-b-2 font-medium transition-colors ${
+              activeTab === 'pendientes'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            }`}
+          >
             Pendientes ({equipos.length})
           </button>
-          <button className="px-4 py-2 text-gray-600 hover:text-gray-900">
+          <button
+            onClick={() => setActiveTab('entregadas')}
+            className={`px-4 py-2 border-b-2 font-medium transition-colors ${
+              activeTab === 'entregadas'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            }`}
+          >
             Entregadas ({entregas.length})
           </button>
         </div>
 
-        {/* Equipos Listos para Entregar */}
+        {/* Tab Content */}
+        {activeTab === 'pendientes' && (
         <div className="bg-white rounded-lg shadow">
           {loading ? (
             <div className="p-8 text-center text-gray-600">
@@ -164,6 +180,59 @@ export default function EntregasPage() {
             </div>
           )}
         </div>
+        )}
+
+        {/* Tab Entregadas */}
+        {activeTab === 'entregadas' && (
+        <div className="bg-white rounded-lg shadow">
+          {loading ? (
+            <div className="p-8 text-center text-gray-600">
+              Cargando entregas...
+            </div>
+          ) : entregas.length === 0 ? (
+            <div className="p-8 text-center text-gray-600">
+              No hay entregas registradas
+            </div>
+          ) : (
+            <div className="divide-y">
+              {entregas.map(entrega => (
+                <div key={entrega.id} className="p-6 hover:bg-gray-50 transition">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {entrega.equipo.cliente.nombre}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {entrega.equipo.descripcion}
+                      </p>
+                      <div className="mt-3 flex gap-4 text-xs text-gray-600">
+                        <span>Interno: {entrega.equipo.numeroInterno}</span>
+                        <span>Tel: {entrega.equipo.cliente.telefono}</span>
+                      </div>
+                      {entrega.numeroRemitoOficial && (
+                        <div className="mt-3 flex gap-4 text-xs text-gray-500">
+                          <span>Remito Oficial: {entrega.numeroRemitoOficial}</span>
+                          {entrega.numeroRemitoInterno && (
+                            <span>Remito Interno: {entrega.numeroRemitoInterno}</span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      <span className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-green-100 text-green-900">
+                        Entregado
+                      </span>
+                      <p className="text-xs text-gray-500 mt-2">
+                        {new Date(entrega.fechaEntrega).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        )}
       </div>
 
       {/* Modal de Entrega */}

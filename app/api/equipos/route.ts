@@ -8,7 +8,15 @@ export async function GET() {
     const equipos = await prisma.equipo.findMany({
       include: {
         cliente: true,
-        reparaciones: true
+        reparaciones: {
+          include: {
+            valorizacion: {
+              include: {
+                cotizacion: true
+              }
+            }
+          }
+        }
       },
       orderBy: { createdAt: 'desc' }
     })
