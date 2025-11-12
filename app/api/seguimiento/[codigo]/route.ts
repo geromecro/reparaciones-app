@@ -23,8 +23,7 @@ export async function GET(
           include: {
             historial: {
               orderBy: { fechaCambio: 'desc' }
-            },
-            repuestosUsados: true
+            }
           }
         }
       }
@@ -52,11 +51,6 @@ export async function GET(
         estado: reparacion.estado,
         createdAt: reparacion.createdAt
       },
-      repuestos: reparacion.repuestosUsados.map(r => ({
-        codigoRepuesto: r.codigoRepuesto,
-        descripcion: r.descripcion,
-        cantidad: r.cantidad
-      })),
       historial: reparacion.historial
     })
   } catch (error) {
