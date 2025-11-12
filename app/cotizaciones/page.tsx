@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { formatCurrency } from '@/lib/format'
 
 interface Cotizacion {
   id: number
@@ -132,19 +133,19 @@ export default function CotizacionesPage() {
                         <div>
                           <p className="text-gray-600 text-sm">Costo Original</p>
                           <p className="text-2xl font-bold text-gray-900">
-                            ${cot.importeOriginal.toFixed(2)}
+                            ${formatCurrency(cot.importeOriginal)}
                           </p>
                         </div>
                         <div>
                           <p className="text-gray-600 text-sm">Ajuste Actual</p>
                           <p className="text-2xl font-bold text-blue-600">
-                            ${cot.ajustePablo.toFixed(2)}
+                            ${formatCurrency(cot.ajustePablo)}
                           </p>
                         </div>
                         <div>
                           <p className="text-gray-600 text-sm">Total Final</p>
                           <p className="text-2xl font-bold text-green-600">
-                            ${cot.importeFinal.toFixed(2)}
+                            ${formatCurrency(cot.importeFinal)}
                           </p>
                         </div>
                       </div>

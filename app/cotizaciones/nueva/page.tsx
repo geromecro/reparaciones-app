@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { formatCurrency } from '@/lib/format'
 
 interface Valorizacion {
   id: number
@@ -136,15 +137,15 @@ function NuevaCotizacionContent() {
               <div className="space-y-3 mb-6 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Repuestos</span>
-                  <span className="font-semibold text-gray-900">${valorizacion.costoRepuestos.toFixed(2)}</span>
+                  <span className="font-semibold text-gray-900">${formatCurrency(valorizacion.costoRepuestos)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Mano de Obra</span>
-                  <span className="font-semibold text-gray-900">${valorizacion.importeManoObra.toFixed(2)}</span>
+                  <span className="font-semibold text-gray-900">${formatCurrency(valorizacion.importeManoObra)}</span>
                 </div>
                 <div className="border-t pt-3 flex justify-between font-semibold">
                   <span className="text-gray-900">Subtotal</span>
-                  <span className="text-blue-600">${valorizacion.subtotal.toFixed(2)}</span>
+                  <span className="text-blue-600">${formatCurrency(valorizacion.subtotal)}</span>
                 </div>
               </div>
             </div>
@@ -170,11 +171,11 @@ function NuevaCotizacionContent() {
             <div className="bg-green-50 p-6 rounded-lg border border-green-200">
               <h3 className="text-sm font-medium text-gray-700 mb-2">Precio Final</h3>
               <div className="text-4xl font-bold text-green-600">
-                ${importeFinal.toFixed(2)}
+                ${formatCurrency(importeFinal)}
               </div>
               {ajustePablo !== 0 && (
                 <p className="text-xs text-gray-600 mt-2">
-                  Ajuste: {ajustePablo > 0 ? '+' : ''} ${ajustePablo.toFixed(2)}
+                  Ajuste: {ajustePablo > 0 ? '+' : ''} ${formatCurrency(ajustePablo)}
                 </p>
               )}
             </div>

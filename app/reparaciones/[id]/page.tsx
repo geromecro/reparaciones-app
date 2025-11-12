@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import EstadoSelector from '@/components/EstadoSelector'
 import Modal from '@/components/Modal'
+import { formatCurrency } from '@/lib/format'
 
 interface RepuestoUsado {
   id: number
@@ -649,8 +650,8 @@ export default function DetallesReparacion() {
                       <td className="px-6 py-4 text-sm text-gray-900 font-mono">{rep.codigoRepuesto}</td>
                       <td className="px-6 py-4 text-sm text-gray-700">{rep.descripcion || '-'}</td>
                       <td className="px-6 py-4 text-center text-sm text-gray-900 font-semibold">{rep.cantidad}</td>
-                      <td className="px-6 py-4 text-right text-sm text-gray-900">${rep.importeUnitario.toFixed(2)}</td>
-                      <td className="px-6 py-4 text-right text-sm font-bold text-gray-900">${rep.subtotal.toFixed(2)}</td>
+                      <td className="px-6 py-4 text-right text-sm text-gray-900">${formatCurrency(rep.importeUnitario)}</td>
+                      <td className="px-6 py-4 text-right text-sm font-bold text-gray-900">${formatCurrency(rep.subtotal)}</td>
                       <td className="px-6 py-4 text-center">
                         <div className="flex gap-2 justify-center">
                           <button onClick={() => setEditingRepuesto({id: rep.id, codigoRepuesto: rep.codigoRepuesto, descripcion: rep.descripcion, cantidad: rep.cantidad, importeUnitario: rep.importeUnitario})} className="text-blue-600 hover:text-blue-800 text-xs font-semibold hover:underline">Editar</button>
@@ -662,7 +663,7 @@ export default function DetallesReparacion() {
                   ))}
                   <tr className="bg-blue-50 border-t-2 border-gray-300">
                     <td colSpan={4} className="px-6 py-5 text-right text-sm font-bold text-gray-900 uppercase tracking-wider">Total Repuestos:</td>
-                    <td className="px-6 py-5 text-right text-2xl font-bold text-blue-900">${totalRepuestos.toFixed(2)}</td>
+                    <td className="px-6 py-5 text-right text-2xl font-bold text-blue-900">${formatCurrency(totalRepuestos)}</td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -713,21 +714,21 @@ export default function DetallesReparacion() {
                 <div className="p-8 space-y-6 border-b-2 border-gray-300">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Costo de Repuestos</span>
-                    <span className="text-xl font-bold text-gray-900">${reparacion.valorizacion.costoRepuestos.toFixed(2)}</span>
+                    <span className="text-xl font-bold text-gray-900">${formatCurrency(reparacion.valorizacion.costoRepuestos)}</span>
                   </div>
 
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-semibold text-gray-600 uppercase tracking-wider">
                       Mano de Obra - {reparacion.valorizacion.manoObraElectricista}
                     </span>
-                    <span className="text-xl font-bold text-gray-900">${reparacion.valorizacion.importeManoObra.toFixed(2)}</span>
+                    <span className="text-xl font-bold text-gray-900">${formatCurrency(reparacion.valorizacion.importeManoObra)}</span>
                   </div>
                 </div>
 
                 {/* Subtotal */}
                 <div className="px-8 py-6 bg-blue-50 border-b-2 border-gray-300 flex justify-between items-center">
                   <span className="text-base font-bold text-gray-700 uppercase tracking-wider">Subtotal</span>
-                  <span className="text-2xl font-bold text-blue-900">${reparacion.valorizacion.subtotal.toFixed(2)}</span>
+                  <span className="text-2xl font-bold text-blue-900">${formatCurrency(reparacion.valorizacion.subtotal)}</span>
                 </div>
 
                 {/* Cotización Section */}
