@@ -65,8 +65,7 @@ export default function DetallesReparacion() {
 
   const [valorizacion, setValorizacion] = useState({
     manoObraElectricista: 'Arnau',
-    importeManoObra: 0,
-    numeroFacturaInterna: ''
+    importeManoObra: 0
   })
 
   useEffect(() => {
@@ -679,16 +678,16 @@ export default function DetallesReparacion() {
         {/* Valorizacion Section */}
         <div className="bg-white rounded-xl shadow-md p-8">
           <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Valorización</h2>
+            <h2 className="text-xl font-bold text-gray-900">Mano de obra</h2>
             {!reparacion.valorizacion && (
               <button onClick={() => setShowFormValorizacion(!showFormValorizacion)} className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-semibold transition-colors">
-                {showFormValorizacion ? '✕ Cancelar' : '+ Crear Valorización'}
+                {showFormValorizacion ? '✕ Cancelar' : '+ Crear Mano de obra'}
               </button>
             )}
           </div>
 
           {showFormValorizacion && (
-            <form onSubmit={createValorizacion} className="p-6 bg-gray-50 rounded-lg mb-6 grid grid-cols-3 gap-4 border border-gray-200 mb-8">
+            <form onSubmit={createValorizacion} className="p-6 bg-gray-50 rounded-lg mb-6 grid grid-cols-2 gap-4 border border-gray-200 mb-8">
               <div>
                 <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Electricista *</label>
                 <select value={valorizacion.manoObraElectricista} onChange={(e) => setValorizacion({...valorizacion, manoObraElectricista: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base">
@@ -700,12 +699,8 @@ export default function DetallesReparacion() {
                 <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Importe Mano de Obra *</label>
                 <input type="number" required value={valorizacion.importeManoObra} onChange={(e) => setValorizacion({...valorizacion, importeManoObra: parseFloat(e.target.value) || 0})} min="0" step="0.01" className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" />
               </div>
-              <div className="flex flex-col">
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Nº Factura</label>
-                <div className="flex gap-2">
-                  <input type="text" value={valorizacion.numeroFacturaInterna} onChange={(e) => setValorizacion({...valorizacion, numeroFacturaInterna: e.target.value})} className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-base" />
-                  <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-base font-semibold transition-colors whitespace-nowrap">Crear</button>
-                </div>
+              <div className="col-span-2">
+                <button type="submit" className="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-base font-semibold transition-colors">Crear Mano de obra</button>
               </div>
             </form>
           )}
@@ -783,7 +778,7 @@ export default function DetallesReparacion() {
             </div>
           ) : (
             <div className="text-center py-12 bg-gray-50 rounded-lg">
-              <p className="text-lg text-gray-500">Cree una valorización para continuar</p>
+              <p className="text-lg text-gray-500">Cree la mano de obra para continuar</p>
             </div>
           )}
         </div>
