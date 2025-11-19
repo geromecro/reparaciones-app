@@ -518,15 +518,6 @@ export default function DetallesReparacion() {
                   <dt className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Número Interno</dt>
                   <dd className="text-base text-gray-900 font-mono">{reparacion.equipo.numeroInterno}</dd>
                 </div>
-                <div>
-                  <dt className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Estado del Equipo</dt>
-                  <dd className="text-base">
-                    <span className="inline-block px-3 py-1 rounded-lg text-sm font-semibold bg-blue-100 text-blue-900">
-                      {reparacion.equipo.estado.replace('_', ' ')}
-                    </span>
-                  </dd>
-                </div>
-
                 {/* Reparación Info */}
                 <div className="pt-4 border-t border-gray-200">
                   <dt className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Electricista Asignado</dt>
