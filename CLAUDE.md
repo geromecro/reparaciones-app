@@ -149,6 +149,9 @@ const id = params.id
    - If database schema mismatches Prisma schema, use `npx prisma db push --force-reset` (destroys data)
 
 3. **Styling with Tailwind v4**:
+   - **CRITICAL**: Use `@import "tailwindcss"` syntax (v4), NOT `@tailwind directives` (v3)
+   - Import statement should be: `@import "tailwindcss";` at top of globals.css
+   - Failure to use v4 syntax results in CSS file being 6KB instead of 25KB with no utilities generated
    - Custom colors available: `primary-*`, `accent-*`, `warning-*`, `error-*`
    - Use `@layer` directives in CSS for component abstractions (see globals.css)
    - No dark mode configured (not needed for this MVP)
@@ -158,6 +161,28 @@ const id = params.id
    - Progress shown with numbered steps
    - Previous/Next buttons navigate between steps
    - Form submission happens only on final step
+
+5. **Repository File Structure**:
+   - **CRITICAL**: Files are in repo ROOT (`app/`, `lib/`, `components/`), NOT in `reparaciones-app/` subdirectory
+   - During Phase 3, all files were moved from subdirectory to root for Vercel deployment
+   - Vercel builds from root-level files only - subdirectory files are NOT deployed
+   - When making changes, verify correct file location: `git log --all --follow -- filename`
+   - Common mistake: editing wrong file location and wondering why changes don't appear
+
+6. **Cache Control (Critical for Dynamic Data)**:
+   - **MUST have**: `next.config.js` with cache-busting configuration
+   - Without it: Vercel CDN caches stale data, users see old repair status even after deployment
+   - Configuration includes:
+     - `generateEtags: false` - Disable ETag-based caching
+     - `Cache-Control: public, max-age=0, s-maxage=0, must-revalidate` headers
+     - `onDemandEntries: { maxInactiveAge: 0, pagesBufferLength: 0 }` - Disable page caching
+   - Result: Browser/CDN must revalidate on every request, ensures fresh data always
+
+7. **Currency Formatting**:
+   - Use `lib/format.ts` with `formatCurrency()` for consistent monetary displays
+   - Format: Argentine locale with point for thousands separator, comma for decimals
+   - Example: `formatCurrency(1234.56)` → `"1.234,56"`
+   - Never use `.toFixed(2)` directly for display - always use formatCurrency()
 
 ## Database Configuration
 
@@ -437,6 +462,71 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
     - Dashboard provides clear visual indication of incomplete records
     - Simple, non-intrusive editing interface
     - No disruption to existing workflows
+
+### Phase 7: UI/UX Improvements & Bug Fixes (Nov 19, 2025)
+  - ✅ **Three-Stage Workflow Indicators**:
+    - Created `components/EtapaIndicadores.tsx` for visual progress tracking
+    - Shows 3 business stages: Etapa 1 (Recepción), Etapa 2 (Presupuesto), Etapa 3 (Administración)
+    - Visual indicators (✓ checkmark for complete, ○ circle for pending)
+    - Separators with responsible person names (Julio/Rodríguez/Pablo)
+    - Integrated into dashboard repair list
+
+  - ✅ **Dashboard Filtering by Stage**:
+    - Added tabs system to filter repairs: Todo, Etapa 1, Etapa 2, Etapa 3
+    - Tabs show count of repairs in each stage
+    - Logic detects stage completion based on data state:
+      - Etapa 1: complete when `estado >= ASIGNADO`
+      - Etapa 2: complete when valorizacion exists + repuestos.length > 0
+      - Etapa 3: complete when cotizacion exists + estado >= FACTURADO
+
+  - ✅ **Currency Formatting**:
+    - Created `lib/format.ts` with `formatCurrency()` function
+    - Applied to 14 locations across 3 files (repuestos, valorizacion, cotizaciones)
+    - Format: Argentine locale (point for thousands, comma for decimals)
+    - Example: 1234.56 → "1.234,56"
+
+  - ✅ **Section Rename**:
+    - Renamed "Valorización" section to "Mano de obra" for clarity
+    - Removed "Número de Factura Interna" field from valorizacion form
+    - Simplified form from 3 columns to 2 columns
+
+  - ✅ **Removed Redundant Field**:
+    - Removed "Estado del Equipo" display from repair detail page
+    - Field was redundant with "Estado de la Reparación"
+    - Equipment status still tracked in database for future inventory features
+    - **CRITICAL**: Found file was in subdirectory `reparaciones-app/` instead of repo root
+      - Solution: Identified correct file location at `app/reparaciones/[id]/page.tsx` (root level)
+      - Root-level files are what Vercel actually builds and deploys
+      - Removed field from correct location, redeployed successfully
+
+  - ✅ **Cache Busting Configuration**:
+    - Restored `next.config.js` with comprehensive cache-disabling settings:
+      - `generateEtags: false` - Disable ETag-based caching
+      - `Cache-Control: public, max-age=0, s-maxage=0, must-revalidate` - Force revalidation
+      - `onDemandEntries: { maxInactiveAge: 0, pagesBufferLength: 0 }` - No page caching
+    - Prevents browser/Vercel CDN from serving stale data after deployments
+    - Ensures users always see latest repair status without manual refresh
+
+  - ✅ **Repository Structure Lesson Learned**:
+    - During Phase 3 restructure, files were moved from `reparaciones-app/` subdirectory to repo root
+    - Vercel deploys from root-level files (`app/`, `lib/`, etc.), NOT from subdirectories
+    - Critical to verify file locations before committing changes
+    - Solution: Always check `git log --all --follow -- filename` to trace file history
+
+  - ✅ **Commits** (Nov 19, 2025):
+    - `3bc7edc`: Add currency formatting with thousands separators
+    - `dd575ca`: Rename 'Valorización' to 'Mano de obra' and remove invoice number field
+    - `2fedbd6`: Implement three-stage workflow system with progress indicators
+    - `1c21fed`: Remove parts list from public tracking link for clients
+    - `1d0a53f`: Remove redundant 'Estado del Equipo' field from repair detail page
+    - `fbe16c2`: Restore cache busting configuration (next.config.js)
+    - `62b6cb4`: Remove redundant 'Estado del Equipo' field (correct location)
+
+  - **Key Learnings**:
+    - Always verify files are in the deployed location before making changes
+    - Cache configuration is critical for dynamic repair data (fixes hard-refresh problem)
+    - Redundant UI elements confuse users - remove when duplicated elsewhere
+    - Three-stage workflow visualization helps both staff and management track progress
 
 ### Phase 6: Optional Future Enhancements
   - ⏳ PDF generation for invoices and delivery notes
