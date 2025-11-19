@@ -9,7 +9,7 @@ export default function Home() {
     },
     {
       href: '/dashboard',
-      title: 'Dashboard',
+      title: 'Listado',
       description: 'Ver todas las reparaciones',
     },
     {

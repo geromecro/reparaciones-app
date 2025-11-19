@@ -106,7 +106,7 @@ function NuevaCotizacionContent() {
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <p className="text-red-600 mb-4">{error || 'Valorización no encontrada'}</p>
             <Link href="/dashboard" className="text-blue-600 hover:text-blue-900">
-              ← Volver al Dashboard
+              ← Volver al Listado
             </Link>
           </div>
         </div>
