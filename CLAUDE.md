@@ -513,6 +513,12 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
     - Critical to verify file locations before committing changes
     - Solution: Always check `git log --all --follow -- filename` to trace file history
 
+  - ✅ **UI Naming Refinement**:
+    - Renamed "Dashboard" to "Listado" in menu item (more descriptive for repair list view)
+    - Updated return link text from "Volver al Dashboard" to "Volver al Listado"
+    - Route remains `/dashboard` (URL unchanged for compatibility)
+    - Changes in `app/page.tsx` and `app/cotizaciones/nueva/page.tsx`
+
   - ✅ **Commits** (Nov 19, 2025):
     - `3bc7edc`: Add currency formatting with thousands separators
     - `dd575ca`: Rename 'Valorización' to 'Mano de obra' and remove invoice number field
@@ -521,6 +527,8 @@ The app prioritizes **clarity, simplicity, and minimal visual noise**:
     - `1d0a53f`: Remove redundant 'Estado del Equipo' field from repair detail page
     - `fbe16c2`: Restore cache busting configuration (next.config.js)
     - `62b6cb4`: Remove redundant 'Estado del Equipo' field (correct location)
+    - `06d8352`: Update CLAUDE.md with Phase 7 improvements and critical implementation notes
+    - `f8a2b10`: Rename 'Dashboard' to 'Listado' in UI
 
   - **Key Learnings**:
     - Always verify files are in the deployed location before making changes
