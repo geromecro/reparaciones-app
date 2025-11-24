@@ -450,7 +450,7 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Main Content - 2 Column Layout */}
-        <div className="grid grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-3 gap-8 mb-12">
           {/* Left Column - Detalles de la Reparación (2/3 width) */}
           <div className="col-span-2 bg-white rounded-xl shadow-md p-8">
             <div className="flex justify-between items-start mb-6 pb-6 border-b border-gray-200">
@@ -586,7 +586,7 @@ export default function DetallesReparacion() {
         </div>
 
         {/* Repuestos Section */}
-        <div className="bg-white rounded-xl shadow-md p-8 mb-8">
+        <div className="bg-white rounded-xl shadow-md p-8 mb-12">
           <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-200">
             <h2 className="text-xl font-bold text-gray-900">Repuestos Utilizados</h2>
             <button
@@ -679,7 +679,7 @@ export default function DetallesReparacion() {
           </div>
 
           {showFormValorizacion && (
-            <form onSubmit={createValorizacion} className="p-6 bg-gray-50 rounded-lg mb-6 grid grid-cols-2 gap-4 border border-gray-200 mb-8">
+            <form onSubmit={createValorizacion} className="p-6 bg-gray-50 rounded-lg mb-6 grid grid-cols-2 gap-4 border border-gray-200 mb-12">
               <div>
                 <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Electricista *</label>
                 <select value={valorizacion.manoObraElectricista} onChange={(e) => setValorizacion({...valorizacion, manoObraElectricista: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base">
