@@ -253,7 +253,7 @@ export default function EntregasPage() {
                   value={remitos.numeroRemitoOficial}
                   onChange={(e) => setRemitos({...remitos, numeroRemitoOficial: e.target.value})}
                   placeholder="Ej: REM-2024-001"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                 />
               </div>
 
@@ -266,7 +266,7 @@ export default function EntregasPage() {
                   value={remitos.numeroRemitoInterno}
                   onChange={(e) => setRemitos({...remitos, numeroRemitoInterno: e.target.value})}
                   placeholder="Ej: INTERNAL-001"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                 />
               </div>
 

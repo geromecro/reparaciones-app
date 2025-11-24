@@ -296,7 +296,7 @@ export default function DetallesReparacion() {
         <form onSubmit={updateRepuesto}>
           <div className="space-y-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Código Repuesto
               </label>
               <input
@@ -304,22 +304,22 @@ export default function DetallesReparacion() {
                 required
                 value={editingRepuesto?.codigoRepuesto || ''}
                 onChange={(e) => editingRepuesto && setEditingRepuesto({...editingRepuesto, codigoRepuesto: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Descripción
               </label>
               <input
                 type="text"
                 value={editingRepuesto?.descripcion || ''}
                 onChange={(e) => editingRepuesto && setEditingRepuesto({...editingRepuesto, descripcion: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Cantidad
               </label>
               <input
@@ -328,11 +328,11 @@ export default function DetallesReparacion() {
                 value={editingRepuesto?.cantidad || 1}
                 onChange={(e) => editingRepuesto && setEditingRepuesto({...editingRepuesto, cantidad: parseInt(e.target.value) || 1})}
                 min="1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Precio Unitario
               </label>
               <input
@@ -342,7 +342,7 @@ export default function DetallesReparacion() {
                 onChange={(e) => editingRepuesto && setEditingRepuesto({...editingRepuesto, importeUnitario: parseFloat(e.target.value) || 0})}
                 min="0"
                 step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -373,19 +373,19 @@ export default function DetallesReparacion() {
         <form onSubmit={updateCotizacion}>
           <div className="space-y-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Importe Original
               </label>
               <input
                 type="number"
                 disabled
                 value={reparacion?.valorizacion?.cotizacion?.importeOriginal || 0}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600"
+                className="w-full px-3 py-3 border border-gray-300 rounded-md bg-gray-50 text-gray-600"
               />
               <p className="text-xs text-gray-500 mt-1">Se actualiza automáticamente con repuestos</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Ajuste Pablo
               </label>
               <input
@@ -394,18 +394,18 @@ export default function DetallesReparacion() {
                 value={cotizacionAjuste}
                 onChange={(e) => setCotizacionAjuste(parseFloat(e.target.value) || 0)}
                 step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Importe Final
               </label>
               <input
                 type="number"
                 disabled
                 value={(reparacion?.valorizacion?.cotizacion?.importeOriginal || 0) + cotizacionAjuste}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600 font-semibold"
+                className="w-full px-3 py-3 border border-gray-300 rounded-md bg-gray-50 text-gray-600 font-semibold"
               />
             </div>
           </div>
