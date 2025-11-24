@@ -29,7 +29,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-6 py-16">
         {/* Header */}
         <div className="mb-16">
-          <h1 className="text-4xl font-bold text-primary-900 mb-2">
+          <h1 className="text-3xl font-bold text-primary-900 mb-2">
             Sistema de Reparaciones
           </h1>
           <p className="text-lg text-primary-600">

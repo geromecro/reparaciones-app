@@ -431,7 +431,7 @@ export default function DetallesReparacion() {
         {/* Header */}
         <div className="mb-8 flex justify-between items-start">
           <div>
-            <h1 className="text-5xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Reparación #{reparacion.id}
             </h1>
             <p className="text-lg text-gray-600">
@@ -454,7 +454,7 @@ export default function DetallesReparacion() {
           {/* Left Column - Detalles de la Reparación (2/3 width) */}
           <div className="col-span-2 bg-white rounded-xl shadow-md p-8">
             <div className="flex justify-between items-start mb-6 pb-6 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900">Detalles de la Reparación</h2>
+              <h2 className="text-xl font-semibold text-gray-900">Detalles de la Reparación</h2>
               {!editingBasicInfo && (
                 <button
                   onClick={handleEditBasicInfoClick}
@@ -588,7 +588,7 @@ export default function DetallesReparacion() {
         {/* Repuestos Section */}
         <div className="bg-white rounded-xl shadow-md p-8 mb-12">
           <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Repuestos Utilizados</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Repuestos Utilizados</h2>
             <button
               onClick={() => setShowFormRepuesto(!showFormRepuesto)}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-semibold transition-colors"
@@ -670,7 +670,7 @@ export default function DetallesReparacion() {
         {/* Valorizacion Section */}
         <div className="bg-white rounded-xl shadow-md p-8">
           <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Mano de obra</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Mano de obra</h2>
             {!reparacion.valorizacion && (
               <button onClick={() => setShowFormValorizacion(!showFormValorizacion)} className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-semibold transition-colors">
                 {showFormValorizacion ? '✕ Cancelar' : '+ Crear Mano de obra'}

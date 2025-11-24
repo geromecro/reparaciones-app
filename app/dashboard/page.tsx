@@ -181,7 +181,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="mb-20 flex justify-between items-start">
           <div>
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">
               Panel de Reparaciones
             </h1>
             <p className="text-lg text-gray-600">
