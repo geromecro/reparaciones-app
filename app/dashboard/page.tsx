@@ -156,30 +156,11 @@ export default function Dashboard() {
     administracion: reparaciones.filter((rep) => etapa2Completa(rep) && !etapa3Completa(rep)).length
   }
 
-  const statCards = [
-    {
-      label: 'En Inicio',
-      count: reparaciones.filter(r => ['RECIBIDO', 'PRECINTADO', 'ASIGNADO'].includes(r.estado)).length,
-    },
-    {
-      label: 'En Trabajo',
-      count: reparaciones.filter(r => ['DIAGNOSTICO', 'EN_REPARACION', 'ESPERANDO_REPUESTOS'].includes(r.estado)).length,
-    },
-    {
-      label: 'En Administrativo',
-      count: reparaciones.filter(r => ['VALORIZADO', 'COTIZADO', 'APROBADO'].includes(r.estado)).length,
-    },
-    {
-      label: 'Entregadas/Cerradas',
-      count: reparaciones.filter(r => ['FACTURADO', 'LISTO_PARA_RETIRO', 'ENTREGADO', 'CERRADO'].includes(r.estado)).length,
-    },
-  ]
-
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-8 py-16">
         {/* Header */}
-        <div className="mb-20 flex justify-between items-start">
+        <div className="mb-8 flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               Panel de Reparaciones
@@ -193,20 +174,6 @@ export default function Dashboard() {
               ← Inicio
             </Button>
           </Link>
-        </div>
-
-        {/* Stats Grid - Minimalista */}
-        <div className="grid grid-cols-4 gap-6 mb-20">
-          {statCards.map((stat, idx) => (
-            <div key={idx} className="bg-white rounded-xl shadow-sm p-10 hover:shadow-md transition-shadow">
-              <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-4">
-                {stat.label}
-              </p>
-              <p className="text-6xl font-bold text-gray-900">
-                {stat.count}
-              </p>
-            </div>
-          ))}
         </div>
 
         {/* Tabs de Filtrado por Etapa */}
