@@ -210,7 +210,7 @@ export default function Dashboard() {
         </div>
 
         {/* Tabs de Filtrado por Etapa */}
-        <div className="mb-8 flex gap-3 border-b border-gray-200">
+        <div className="mb-10 flex gap-3 border-b border-gray-200 pb-4">
           {[
             { id: 'todo' as FiltroEtapa, label: 'Todo', count: conteos.todo },
             { id: 'recepcion' as FiltroEtapa, label: 'Recepción', count: conteos.recepcion },
