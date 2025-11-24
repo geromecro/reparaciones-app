@@ -48,8 +48,8 @@ export default function Home() {
               {/* Subtle accent line on hover */}
               <div className="absolute top-0 left-0 h-1 w-0 bg-primary-700 group-hover:w-full transition-all duration-300" />
 
-              <div className="relative z-10">
-                <h2 className="text-lg font-semibold text-primary-900 mb-2 group-hover:text-primary-700 transition-colors">
+              <div className="relative z-10 text-center">
+                <h2 className="text-lg font-semibold text-primary-900 mb-4 group-hover:text-primary-700 transition-colors">
                   {item.title}
                 </h2>
                 <p className="text-sm text-primary-600 group-hover:text-primary-700 transition-colors">
